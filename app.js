@@ -15,7 +15,7 @@ const categories = [
     ['Olde Towne Tavern', '2410 W. Main St.'], ['Black+Haus Tavern Littleton', '2439 W. Main St.'], ['Grande Station: A Social Bistro', '2299 W. Main St.'], ['Alibi\'s Bar & Grill', '7983 S. Broadway'], ['Celly\'s Bar and Grill in the Ice Ranch', '841 Southpark Dr.'], ['Cherry Cricket - Littleton', '819 W. Littleton Blvd.'], ['The Castle Bar & Grill', '6657 S. Broadway'], ['The 49th Food & Spirits - Littleton', '5350 S. Santa Fe Dr.']
   ], tag: '' },
   { title: 'American Style', type: 'food', note: 'Classic American plates', places: [
-    ['The Rusty Tapp Colorado BBQ & Catering', '311 E. County Line Road'], ['Brad\'s Pit BBQ', '5950 S. Platte Canyon Road'], ['ViewHouse Littleton', '2680 W. Main St.'], ['The Melting Pot', '2707 W. Main St.'], ['Bistro 36 Drinkery and Eatery', '2620 W. Belleview Ave.'], ['Manning\'s Steaks and Spirits', '51 W. Dry Creek Ct.'], ['Café Terracotta', '5649 S. Curtice St.']
+    ['The Rusty Tapp Colorado BBQ & Catering', '311 E. County Line Road'], ['Brad\'s Pit BBQ', '5950 S. Platte Canyon Road'], ['Ted\'s Montana Grill', '7301 S. Santa Fe Dr. Ste 610'], ['ViewHouse Littleton', '2680 W. Main St.'], ['The Melting Pot', '2707 W. Main St.'], ['Bistro 36 Drinkery and Eatery', '2620 W. Belleview Ave.'], ['Manning\'s Steaks and Spirits', '51 W. Dry Creek Ct.'], ['Café Terracotta', '5649 S. Curtice St.']
   ], tag: '' },
   { title: 'Asian', type: 'food', note: 'Take your taste buds somewhere new', places: [
     ['Wang\'s Gourmet', '12 E. Arapahoe Road'], ['Sunflower Asian Café', '91 W. Mineral Ave.'], ['Wild Ginger Thai Restaurant', '399 W. Littleton Blvd.'], ['Yummy Station', '1140 W. Littleton Blvd.'], ['Beyond Thai', '2630 W. Belleview Ave. Ste 150']
