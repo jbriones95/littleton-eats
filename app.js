@@ -1,11 +1,11 @@
 const categories = [
   { title: 'Coffee', type: 'drink', note: 'Your daily ritual', places: [
-    ['Copper Door Coffee Roasters', '7301 S. Santa Fe Dr.'], ['Lost Coffee Café & Coffee Roastery', '1190 W. Littleton Blvd.'], ['Enchanted Grounds Coffeehouse', '3615 W. Bowles Ave.'], ['Nixon\'s Coffee House', '6399 S. Santa Fe Dr.'], ['Wild Goose Coffee in Denver Seminary', '6399 S. Santa Fe Dr.'], ['Black Rock Coffee Bar - Broadway', '7961 S. Broadway'], ['iN-TEA', '2440 W. Main St.']
+    ['Copper Door Coffee Roasters', '7301 S. Santa Fe Dr.'], ['Lost Coffee Café & Coffee Roastery', '1190 W. Littleton Blvd.'], ['Enchanted Grounds Coffeehouse', '3615 W. Bowles Ave.'], ['Nixon\'s Coffee House', '6399 S. Santa Fe Dr.'], ['Wild Goose Coffee in Denver Seminary', '6399 S. Santa Fe Dr.'], ['Black Rock Coffee Bar - Broadway', '7961 S. Broadway'], ['iN-TEA', '2440 W. Main St.'], ['DIRT Coffee Bar', '2506 W. Alamo Ave.']
   ], tag: 'Most loved' },
   { title: 'Mexican', type: 'food', note: 'Big flavor, made close to home', places: [
     ['Los Portales Mexican Restaurant', '5350 S. Santa Fe Dr.'], ['El Lucero Salvadoran & Mexican Restaurant', '1500 W. Littleton Blvd. #110 A'], ['Don Juan\'s Mexican Grill', '3625 W. Bowles Ave.'], ['Cencalli Taqueria', 'Littleton, CO 80120'], ['Harley\'s: A Hot Dog Revolution', '1500 W. Littleton Blvd.'], ['Mi Cocina Express - Broadway', '137 W. County Line Road'], ['Old Santa Fe Express Mexican Grille', '1500 W. Littleton Blvd.'], ['Mama Sol Cafe', '6439 S. Broadway'], ['4G\'s at Columbine', '5950 S. Platte Canyon Road']
   ], tag: 'Hot category' },
-  { title: 'Pizza', type: 'food', note: 'A slice of the good life', places: [
+  { title: 'Pizza & Italian', type: 'food', note: 'A slice of the good life', places: [
     ['Old Fashioned Italian Deli', '395 W. Littleton Blvd.'], ['The Garlic Knot Pizza & Pasta', '1621 W. Canal Circle'], ['Big Daddy\'s Pizza', '5829 S. Broadway'], ['Piccino Wood Oven Pizza', '5350 S. Santa Fe Dr.'], ['Romano\'s Italian Restaurant & Pizzeria', '5666 S. Windermere St.'], ['Walter\'s 303 Pizzeria & Publik House', '5194 S. Lowell Blvd.'], ['Angelo\'s Taverna', '6685 S. Santa Fe Dr.']
   ], tag: '' },
   { title: 'Bars', type: 'experience', note: 'Good food, good company', places: [
