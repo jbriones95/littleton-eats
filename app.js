@@ -12,7 +12,7 @@ const categories = [
     ['Olde Towne Tavern', '2410 W. Main St.'], ['Black+Haus Tavern Littleton', '2439 W. Main St.'], ['Manning\'s Steaks and Spirits', '51 W. Dry Creek Ct.'], ['ViewHouse Littleton', '2680 W. Main St.'], ['Grande Station: A Social Bistro', '2299 W. Main St.'], ['Colorado Pinball Pub', '6209 S. Santa Fe Dr.'], ['Alibi\'s Bar & Grill', '7983 S. Broadway'], ['Celly\'s Bar and Grill in the Ice Ranch', '841 Southpark Dr.'], ['Cherry Cricket - Littleton', '819 W. Littleton Blvd.'], ['The Castle Bar & Grill', '6657 S. Broadway'], ['The 49th Food & Spirits - Littleton', '5350 S. Santa Fe Dr.']
   ], tag: '' },
   { title: 'Global', type: 'food', note: 'Take your taste buds somewhere new', places: [
-    ['Zaika Indian Cuisine', '151 W. Mineral Ave.'], ['Haveli Indian Cuisine', '301 E. County Line Road'], ['PokeCo', '151 W. Mineral Ave.'], ['Wang\'s Gourmet', '12 E. Arapahoe Road'], ['Hibachi V Express', '7961B S. Broadway'], ['Pho Real', '2399 W. Main St.'], ['Sunflower Asian Café', '91 W. Mineral Ave.'], ['Sushi Basho', '2700 W. Bowles Ave.'], ['Smokin Fins - Littleton', '2575 W. Main St.'], ['VinaMeals', '1500 W. Littleton Blvd. #110 A'], ['Hujra Kebab & Gyros', '2897 W. Belleview Ave. A']
+    ['Zaika Indian Cuisine', '151 W. Mineral Ave.'], ['Haveli Indian Cuisine', '301 E. County Line Road'], ['PokeCo', '151 W. Mineral Ave.'], ['Wang\'s Gourmet', '12 E. Arapahoe Road'], ['Hibachi V Express', '7961B S. Broadway'], ['Pho Real', '2399 W. Main St.'], ['Sunflower Asian Café', '91 W. Mineral Ave.'], ['Sushi Basho', '2700 W. Bowles Ave.'], ['Smokin Fins - Littleton', '2575 W. Main St.'], ['VinaMeals', '1500 W. Littleton Blvd. #110 A'], ['Hujra Kebab & Gyros', '2897 W. Belleview Ave. A'], ['Gyros Town Grill', '1399 W. Littleton Blvd.']
   ], tag: '' },
   { title: 'BBQ and Chicken', type: 'food', note: 'Slow smoke and crispy crunch', places: [
     ['The Rusty Tapp Colorado BBQ & Catering', '311 E. County Line Road'], ['Brad\'s Pit BBQ', '5950 S. Platte Canyon Road'], ['Daddy\'s Chicken Shack®', '7330 S. Broadway']
@@ -27,9 +27,8 @@ const categories = [
 
 const grid = document.querySelector('#categoryGrid');
 const search = document.querySelector('#searchInput');
-const filters = document.querySelectorAll('.filter');
 const orders = new Map();
-const savedCategories = new Set();
+const rankedCategories = new Set();
 let draggedRestaurant = null;
 const storageKey = 'littleton-eats-rankings-v1';
 const apiUrl = window.LITTLETON_EATS_API || '';
@@ -45,7 +44,7 @@ try {
     const normalizedOrder = [...validOrder, ...missing];
     if (normalizedOrder.length) {
       orders.set(category, normalizedOrder);
-      savedCategories.add(category);
+      rankedCategories.add(category);
     }
   });
 } catch {
@@ -62,11 +61,9 @@ function showToast(message) {
 
 function render() {
   const query = search.value.toLowerCase().trim();
-  const active = document.querySelector('.filter.active').dataset.filter;
   grid.innerHTML = categories.filter(category => {
-    const matchesType = active === 'all' || category.type === active;
     const matchesSearch = !query || `${category.title} ${category.places.flat().join(' ')}`.toLowerCase().includes(query);
-    return matchesType && matchesSearch;
+    return matchesSearch;
   }).map(category => {
     const originalPlaces = category.places.map(([name]) => name);
     const orderedNames = orders.get(category.title) || originalPlaces;
@@ -83,8 +80,8 @@ function render() {
       </div>
     </article>`;
   }).join('');
-  document.querySelector('#voteCount').textContent = `${savedCategories.size} of ${categories.length}`;
-  document.querySelector('#progressBar').style.width = `${(savedCategories.size / categories.length) * 100}%`;
+  document.querySelector('#voteCount').textContent = `${rankedCategories.size} of ${categories.length}`;
+  document.querySelector('#progressBar').style.width = `${(rankedCategories.size / categories.length) * 100}%`;
   grid.querySelectorAll('.restaurant-option').forEach(row => {
     row.addEventListener('dragstart', event => {
       draggedRestaurant = { category: row.dataset.category, name: row.dataset.place };
@@ -113,23 +110,18 @@ function render() {
       order.splice(fromIndex, 1);
       order.splice(fromIndex < toIndex ? toIndex - 1 : toIndex, 0, draggedRestaurant.name);
       orders.set(category.title, order);
-      savedCategories.delete(category.title);
+      rankedCategories.add(category.title);
       render();
       showToast('Order updated');
     });
   });
 }
 
-filters.forEach(filter => filter.addEventListener('click', () => {
-  filters.forEach(item => item.classList.remove('active'));
-  filter.classList.add('active');
-  render();
-}));
 search.addEventListener('input', render);
 document.querySelector('#headerVote').addEventListener('click', () => document.querySelector('#categories').scrollIntoView({ behavior: 'smooth' }));
 document.querySelector('#saveRankings').addEventListener('click', async () => {
   if (!orders.size) return showToast('Drag restaurants into order first');
-  orders.forEach((_, category) => savedCategories.add(category));
+  orders.forEach((_, category) => rankedCategories.add(category));
   const payload = Object.fromEntries(orders);
   try {
     localStorage.setItem(storageKey, JSON.stringify(payload));
