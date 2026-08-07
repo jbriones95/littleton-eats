@@ -21,7 +21,7 @@ const categories = [
     ['Hibachi V Express', '7961B S. Broadway'], ['Sushi Basho', '2700 W. Bowles Ave.'], ['Makizushico', '5950 S. Platte Canyon Rd. D23'], ['JP Nori Sushi & Asian Cuisine', '5302 S. Federal Circle'], ['Ninja Sushi', '7923 S. Broadway'], ['Smokin Fins - Littleton', '2575 W. Main St.']
   ], tag: '' },
   { title: 'Breakfast', type: 'food', note: 'Start the day right', places: [
-    ['Latke Love', '699 W. Littleton Blvd.'], ['Momma\'s Kitchen', '1409 W. Littleton Blvd.'], ['Blend Nutrition', '191 W. Mineral Ave.'], ['Toast Fine Food & Coffee', '2630 W. Belleview Ave.'], ['NoNo\'s Cafe', '3005 W. County Line Road'], ['Bacon Social House', '2100 W. Littleton Blvd.'], ["Louis' Diner", '1500 W. Littleton Blvd.']
+    ['Latke Love', '699 W. Littleton Blvd.'], ['Momma\'s Kitchen', '1409 W. Littleton Blvd.'], ['Blend Nutrition', '191 W. Mineral Ave.'], ['Toast Fine Food & Coffee', '2630 W. Belleview Ave.'], ['NoNo\'s Cafe', '3005 W. County Line Road'], ['Bacon Social House', '2100 W. Littleton Blvd.'], ["Louis' Diner", '1500 W. Littleton Blvd.'], ['Chez Lizeth Creperie', '5856 S. Lowell Blvd. #28']
   ], tag: '' },
   { title: 'Bakeries and Sweets', type: 'food', note: 'A little something sweet', places: [
     ['Manna Bakery & Deli', '6905 S. Broadway'], ['The Chocolate Therapist', '2560 W. Main St.'], ['Playa Bowls', '2490 W. Main St.'], ['Café Terracotta', '5649 S. Curtice St.'], ['Butterscotch Grove Bakery', '7301 S. Santa Fe Dr. #625'], ['Hearth Bakery', '5610 S. Curtice St'], ['Born2Bake', '2540 W. Main St.']
@@ -74,7 +74,7 @@ function showToast(message) {
 }
 
 function render() {
-  grid.innerHTML = categories.map(category => {
+  grid.innerHTML = categories.slice().sort((a, b) => b.places.length - a.places.length).map(category => {
     const originalPlaces = category.places.map(([name]) => name);
     const orderedNames = orders.get(category.title) || originalPlaces;
     const places = orderedNames.map(name => category.places.find(([place]) => place === name));
