@@ -27,7 +27,7 @@ const categories = [
     ['Manna Bakery & Deli', '6905 S. Broadway'], ['The Chocolate Therapist', '2560 W. Main St.'], ['Playa Bowls', '2490 W. Main St.'], ['Café Terracotta', '5649 S. Curtice St.'], ['Butterscotch Grove Bakery', '7301 S. Santa Fe Dr. #625'], ['Hearth Bakery', '5610 S. Curtice St'], ['Born2Bake', '2540 W. Main St.']
   ], tag: '' },
   { title: 'Fast-casual', type: 'experience', note: 'Quick, easy, and worth the stop', places: [
-    ['The Rusty Tapp Colorado BBQ & Catering', '311 E. County Line Road'], ['Brad\'s Pit BBQ', '5950 S. Platte Canyon Road'], ['Ted\'s Montana Grill', '7301 S. Santa Fe Dr.'], ['Port of Subs', '40 W. Littleton Blvd. #204A']
+    ['The Rusty Tapp Colorado BBQ & Catering', '311 E. County Line Road'], ['Brad\'s Pit BBQ', '5950 S. Platte Canyon Road'], ['Ted\'s Montana Grill', '7301 S. Santa Fe Dr.'], ['Port of Subs', '40 W. Littleton Blvd. #204A'], ['Vibe Foods Superfood Bar', '7301 S. Santa Fe Dr.'], ["Snarf's Sandwiches", '2700 W. Bowles Ave. Suite B']
   ], tag: '' },
   { title: 'Vietnamese', type: 'food', note: 'Comfort in a bowl', places: [
     ['Pho Real', '2399 W. Main St.'], ['Pho Littleton', '389 W. Littleton Blvd.'], ['Pho 99 Vietnamese Noodles & Grill', '211 E. County Line Road'], ['Pho Broadway', '6645 S. Broadway'], ['VinaMeals', '1500 W. Littleton Blvd. #110 A']
