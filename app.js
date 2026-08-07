@@ -52,8 +52,10 @@ const orders = new Map();
 const rankedCategories = new Set();
 let draggedRestaurant = null;
 const storageKey = 'littleton-eats-rankings-v1';
+const excludedStorageKey = 'littleton-eats-excluded-v1';
 const apiUrl = window.LITTLETON_EATS_API || '';
 let communityResults = { status: 'loading', categories: [] };
+const excludedPlaces = new Map();
 
 function shuffle(items) {
   const shuffled = items.slice();
@@ -88,12 +90,34 @@ try {
   // Local storage can be unavailable in private browsing.
 }
 
+try {
+  const savedExcluded = JSON.parse(localStorage.getItem(excludedStorageKey) || '{}');
+  Object.entries(savedExcluded).forEach(([category, places]) => {
+    const categoryData = categories.find(item => item.title === category);
+    if (!categoryData || !Array.isArray(places)) return;
+    const available = new Set(categoryData.places.map(([name]) => name));
+    const validPlaces = places.filter(name => available.has(name));
+    if (validPlaces.length) excludedPlaces.set(category, new Set(validPlaces));
+  });
+} catch {
+  // Local storage can be unavailable in private browsing.
+}
+
 function showToast(message) {
   const toast = document.querySelector('#toast');
   toast.lastChild.textContent = ` ${message}`;
   toast.classList.add('show');
   window.clearTimeout(window.toastTimer);
   window.toastTimer = window.setTimeout(() => toast.classList.remove('show'), 1800);
+}
+
+function persistLocalState() {
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(Object.fromEntries(orders)));
+    localStorage.setItem(excludedStorageKey, JSON.stringify(Object.fromEntries([...excludedPlaces].map(([category, places]) => [category, [...places]]))));
+  } catch {
+    // Rankings still work for this session if storage is unavailable.
+  }
 }
 
 function escapeHtml(value) {
@@ -139,7 +163,8 @@ function render() {
   grid.innerHTML = displayCategories.map(category => {
     const originalPlaces = category.places.map(([name]) => name);
     const orderedNames = orders.get(category.title) || originalPlaces;
-    const places = orderedNames.map(name => category.places.find(([place]) => place === name));
+    const excluded = excludedPlaces.get(category.title) || new Set();
+    const places = orderedNames.filter(name => !excluded.has(name)).map(name => category.places.find(([place]) => place === name));
     return `
     <article class="category-card">
       <div class="category-tools">
@@ -148,12 +173,14 @@ function render() {
       </div>
       <h3>${category.title}</h3>
       <div class="restaurant-list">
-        ${places.map(([name, address], index) => `<div class="restaurant-option" draggable="true" data-category="${category.title}" data-place="${name}" data-index="${index}">
+        ${places.length ? places.map(([name, address], index) => `<div class="restaurant-option" draggable="true" data-category="${category.title}" data-place="${name}" data-index="${index}">
           <span class="drag-handle" aria-hidden="true">☷</span>
           <span class="rank-number">${index + 1}</span>
           <span class="restaurant-name"><b>${name}</b><small>${address}, Littleton, CO</small></span>
-        </div>`).join('')}
+          <button class="restaurant-remove" type="button" data-category="${category.title}" data-place="${name}" aria-label="Remove ${name} from ${category.title}"><span aria-hidden="true">×</span></button>
+        </div>`).join('') : '<p class="category-empty">No places selected.</p>'}
       </div>
+      ${excluded.size ? `<div class="category-footer"><button class="category-restore" type="button" data-category="${category.title}">Restore ${excluded.size} removed</button></div>` : ''}
     </article>`;
   }).join('');
   document.querySelector('#voteCount').textContent = `${rankedCategories.size} of ${categories.length}`;
@@ -173,14 +200,55 @@ function render() {
       }
       orders.delete(category);
       rankedCategories.delete(category);
-      try {
-        localStorage.setItem(storageKey, JSON.stringify(Object.fromEntries(orders)));
-      } catch {
-        // The category still resets for this session if storage is unavailable.
-      }
+      excludedPlaces.delete(category);
+      persistLocalState();
       render();
       loadCommunityResults();
       showToast(`${category} reset`);
+    });
+  });
+  grid.querySelectorAll('.category-restore').forEach(button => {
+    button.addEventListener('click', () => {
+      const categoryName = button.dataset.category;
+      const category = displayCategories.find(item => item.title === categoryName);
+      const order = orders.get(categoryName);
+      excludedPlaces.delete(categoryName);
+      if (order) {
+        const missing = category.places.map(([name]) => name).filter(name => !order.includes(name));
+        orders.set(categoryName, [...order, ...missing]);
+      }
+      persistLocalState();
+      render();
+      showToast(`${categoryName} restored`);
+    });
+  });
+  grid.querySelectorAll('.restaurant-remove').forEach(button => {
+    button.addEventListener('click', async event => {
+      event.stopPropagation();
+      const categoryName = button.dataset.category;
+      const placeName = button.dataset.place;
+      const order = orders.get(categoryName);
+      const nextOrder = order ? order.filter(name => name !== placeName) : null;
+      if (apiUrl && order && nextOrder.length === 0) {
+        try {
+          const response = await fetch(`${apiUrl}/api/rankings?category=${encodeURIComponent(categoryName)}`, { method: 'DELETE' });
+          if (!response.ok) throw new Error('Category reset failed');
+        } catch {
+          showToast('Could not remove option');
+          return;
+        }
+        orders.delete(categoryName);
+        rankedCategories.delete(categoryName);
+      } else if (order) {
+        orders.set(categoryName, nextOrder);
+      }
+      const excluded = excludedPlaces.get(categoryName) || new Set();
+      excluded.add(placeName);
+      excludedPlaces.set(categoryName, excluded);
+      persistLocalState();
+      render();
+      loadCommunityResults();
+      showToast(`${placeName} removed`);
     });
   });
   grid.querySelectorAll('.restaurant-option').forEach(row => {
@@ -231,8 +299,10 @@ document.querySelector('#resetRankings').addEventListener('click', async () => {
   }
   orders.clear();
   rankedCategories.clear();
+  excludedPlaces.clear();
   try {
     localStorage.removeItem(storageKey);
+    localStorage.removeItem(excludedStorageKey);
   } catch {
     // The ranking still resets for this session if storage is unavailable.
   }
@@ -244,11 +314,7 @@ document.querySelector('#saveRankings').addEventListener('click', async () => {
   if (!orders.size) return showToast('Drag restaurants into order first');
   orders.forEach((_, category) => rankedCategories.add(category));
   const payload = Object.fromEntries(orders);
-  try {
-    localStorage.setItem(storageKey, JSON.stringify(payload));
-  } catch {
-    // The ranking still works for this session if storage is unavailable.
-  }
+  persistLocalState();
   if (!apiUrl) return showToast('Rankings saved on this device');
   try {
     const response = await fetch(`${apiUrl}/api/rankings`, {
