@@ -15,10 +15,10 @@ const categories = [
     ['The Rusty Tapp Colorado BBQ & Catering', '311 E. County Line Road'], ['Brad\'s Pit BBQ', '5950 S. Platte Canyon Road'], ['Ted\'s Montana Grill', '7301 S. Santa Fe Dr.'], ['ViewHouse Littleton', '2680 W. Main St.'], ['The Melting Pot', '2707 W. Main St.'], ['Bistro 36 Drinkery and Eatery', '2620 W. Belleview Ave.']
   ], tag: '' },
   { title: 'Asian', type: 'food', note: 'Take your taste buds somewhere new', places: [
-    ['Zaika Indian Cuisine', '151 W. Mineral Ave.'], ['Haveli Indian Cuisine', '301 E. County Line Road'], ['PokeCo', '151 W. Mineral Ave.'], ['Wang\'s Gourmet', '12 E. Arapahoe Road'], ['Sunflower Asian Café', '91 W. Mineral Ave.'], ['Wild Ginger Thai Restaurant', '399 W. Littleton Blvd.'], ['Smokin Fins - Littleton', '2575 W. Main St.'], ['Yummy Station', '1140 W. Littleton Blvd.']
+    ['Zaika Indian Cuisine', '151 W. Mineral Ave.'], ['Haveli Indian Cuisine', '301 E. County Line Road'], ['PokeCo', '151 W. Mineral Ave.'], ['Wang\'s Gourmet', '12 E. Arapahoe Road'], ['Sunflower Asian Café', '91 W. Mineral Ave.'], ['Wild Ginger Thai Restaurant', '399 W. Littleton Blvd.'], ['Yummy Station', '1140 W. Littleton Blvd.']
   ], tag: '' },
-  { title: 'Japanese', type: 'food', note: 'Sushi, hibachi, and more', places: [
-    ['Hibachi V Express', '7961B S. Broadway'], ['Sushi Basho', '2700 W. Bowles Ave.'], ['Makizushico', '5950 S. Platte Canyon Rd. D23'], ['JP Nori Sushi & Asian Cuisine', '5302 S. Federal Circle'], ['Ninja Sushi', '7923 S. Broadway']
+  { title: 'Seafood & Japanese', type: 'food', note: 'Sushi, hibachi, and more', places: [
+    ['Hibachi V Express', '7961B S. Broadway'], ['Sushi Basho', '2700 W. Bowles Ave.'], ['Makizushico', '5950 S. Platte Canyon Rd. D23'], ['JP Nori Sushi & Asian Cuisine', '5302 S. Federal Circle'], ['Ninja Sushi', '7923 S. Broadway'], ['Smokin Fins - Littleton', '2575 W. Main St.']
   ], tag: '' },
   { title: 'Breakfast', type: 'food', note: 'Start the day right', places: [
     ['Latke Love', '699 W. Littleton Blvd.'], ['Momma\'s Kitchen', '1409 W. Littleton Blvd.'], ['Blend Nutrition', '191 W. Mineral Ave.'], ['Toast Fine Food & Coffee', '2630 W. Belleview Ave.'], ['NoNo\'s Cafe', '3005 W. County Line Road'], ['Bacon Social House', '2100 W. Littleton Blvd.'], ["Louis' Diner", '1500 W. Littleton Blvd.']
