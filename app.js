@@ -53,6 +53,7 @@ const rankedCategories = new Set();
 let draggedRestaurant = null;
 const storageKey = 'littleton-eats-rankings-v1';
 const apiUrl = window.LITTLETON_EATS_API || '';
+let communityResults = { status: 'loading', categories: [] };
 
 try {
   const savedOrders = JSON.parse(localStorage.getItem(storageKey) || '{}');
@@ -80,6 +81,45 @@ function showToast(message) {
   window.toastTimer = window.setTimeout(() => toast.classList.remove('show'), 1800);
 }
 
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
+}
+
+function renderCommunityResults() {
+  if (communityResults.status === 'loading') {
+    resultsGrid.innerHTML = '<p class="results-empty">Loading community results...</p>';
+    return;
+  }
+  if (communityResults.status === 'unavailable') {
+    resultsGrid.innerHTML = '<p class="results-empty">Community results are not available yet.</p>';
+    return;
+  }
+  const resultMap = new Map(communityResults.categories.map(category => [category.category, category]));
+  const rankedCategories = categories.map(category => resultMap.get(category.title)).filter(Boolean);
+  resultsGrid.innerHTML = rankedCategories.length ? rankedCategories.map(category => `<article class="result-card">
+    <h3>${escapeHtml(category.category)}</h3>
+    <p class="result-voters">Based on ${category.voters} vote${category.voters === 1 ? '' : 's'}</p>
+    <ol>${category.restaurants.map(restaurant => `<li><span><b>${escapeHtml(restaurant.name)}</b><small>${restaurant.votes} vote${restaurant.votes === 1 ? '' : 's'} · average rank ${restaurant.averageRank}</small></span></li>`).join('')}</ol>
+  </article>`).join('') : '<p class="results-empty">Community results will appear after the first ranking is submitted.</p>';
+}
+
+async function loadCommunityResults() {
+  if (!apiUrl) {
+    communityResults = { status: 'unavailable', categories: [] };
+    renderCommunityResults();
+    return;
+  }
+  try {
+    const response = await fetch(`${apiUrl}/api/rankings`);
+    if (!response.ok) throw new Error('Community results failed');
+    const data = await response.json();
+    communityResults = { status: 'ready', categories: Array.isArray(data.categories) ? data.categories : [] };
+  } catch {
+    communityResults = { status: 'unavailable', categories: [] };
+  }
+  renderCommunityResults();
+}
+
 function render() {
   grid.innerHTML = categories.slice().sort((a, b) => b.places.length - a.places.length).map(category => {
     const originalPlaces = category.places.map(([name]) => name);
@@ -99,14 +139,7 @@ function render() {
   }).join('');
   document.querySelector('#voteCount').textContent = `${rankedCategories.size} of ${categories.length}`;
   document.querySelector('#progressBar').style.width = `${(rankedCategories.size / categories.length) * 100}%`;
-  const ranked = categories.filter(category => orders.has(category.title));
-  resultsGrid.innerHTML = ranked.length ? ranked.map(category => {
-    const order = orders.get(category.title);
-    return `<article class="result-card">
-      <h3>${category.title}</h3>
-      <ol>${order.map(name => `<li><span>${name}</span></li>`).join('')}</ol>
-    </article>`;
-  }).join('') : '<p class="results-empty">Reorder a category above to see your results here.</p>';
+  renderCommunityResults();
   grid.querySelectorAll('.restaurant-option').forEach(row => {
     row.addEventListener('dragstart', event => {
       draggedRestaurant = { category: row.dataset.category, name: row.dataset.place };
@@ -177,5 +210,7 @@ document.querySelector('#saveRankings').addEventListener('click', async () => {
     showToast('Could not submit ranking');
   }
   render();
+  loadCommunityResults();
 });
 render();
+loadCommunityResults();

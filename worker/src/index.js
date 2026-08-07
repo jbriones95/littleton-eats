@@ -4,7 +4,7 @@ function corsHeaders(origin) {
   return {
     'Access-Control-Allow-Origin': origin === allowedOrigin ? origin : allowedOrigin,
     'Access-Control-Allow-Headers': 'content-type',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Content-Type': 'application/json'
   };
 }
@@ -19,12 +19,56 @@ async function hashIp(ip, secret) {
   return [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2, '0')).join('');
 }
 
+function aggregateRankings(rows) {
+  const submissionTotals = new Map();
+  rows.forEach(row => {
+    const key = `${row.submission_id}:${row.category}`;
+    submissionTotals.set(key, Math.max(submissionTotals.get(key) || 0, row.rank));
+  });
+
+  const categories = new Map();
+  rows.forEach(row => {
+    const total = submissionTotals.get(`${row.submission_id}:${row.category}`) || 1;
+    let category = categories.get(row.category);
+    if (!category) {
+      category = { voters: new Set(), restaurants: new Map() };
+      categories.set(row.category, category);
+    }
+    category.voters.add(row.submission_id);
+    let restaurant = category.restaurants.get(row.restaurant);
+    if (!restaurant) {
+      restaurant = { votes: 0, rankTotal: 0, score: 0 };
+      category.restaurants.set(row.restaurant, restaurant);
+    }
+    restaurant.votes += 1;
+    restaurant.rankTotal += row.rank;
+    restaurant.score += total === 1 ? 1 : (total - row.rank + 1) / total;
+  });
+
+  return [...categories.entries()].map(([category, data]) => ({
+    category,
+    voters: data.voters.size,
+    restaurants: [...data.restaurants.entries()]
+      .sort(([, left], [, right]) => right.score - left.score || left.rankTotal / left.votes - right.rankTotal / right.votes)
+      .map(([name, restaurant]) => ({
+        name,
+        votes: restaurant.votes,
+        averageRank: Math.round((restaurant.rankTotal / restaurant.votes) * 10) / 10
+      }))
+  }));
+}
+
 export default {
   async fetch(request, env) {
     const origin = request.headers.get('Origin') || '';
     if (origin && origin !== allowedOrigin) return response({ error: 'Origin not allowed' }, 403, origin);
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders(origin) });
-    if (new URL(request.url).pathname !== '/api/rankings' || request.method !== 'POST') return response({ error: 'Not found' }, 404, origin);
+    if (new URL(request.url).pathname !== '/api/rankings') return response({ error: 'Not found' }, 404, origin);
+    if (request.method === 'GET') {
+      const { results } = await env.DB.prepare('SELECT submission_id, category, restaurant, rank FROM rankings ORDER BY category, rank').all();
+      return response({ categories: aggregateRankings(results || []) }, 200, origin);
+    }
+    if (request.method !== 'POST') return response({ error: 'Not found' }, 404, origin);
 
     const ip = request.headers.get('CF-Connecting-IP');
     if (!ip) return response({ error: 'Unable to identify request' }, 400, origin);

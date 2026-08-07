@@ -121,6 +121,7 @@ h1 em, h2 em { color: var(--orange); font-style: normal; }
 
 .footer-note { display: flex; justify-content: space-between; max-width: 1120px; margin: auto; padding: 25px 24px; color: #888; font-size: 10px; }.footer-note p { max-width: 620px; margin: 0; line-height: 1.5; }.footer-note a { color: var(--green); }.footer-note small { display: inline-block; margin-top: 7px; font-size: 12px; }
 .toast { position: fixed; right: 20px; bottom: 20px; padding: 12px 15px; color: white; background: var(--green); font-size: 12px; opacity: 0; transform: translateY(70px); transition: .25s; }.toast.show { opacity: 1; transform: translateY(0); }.toast span { margin-right: 7px; color: #b9d1be; }
+.result-voters { margin: -8px 0 10px; color: var(--muted); font-size: 11px; }.result-card li small { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; }
 
 @media (max-width: 800px) {
   .main-nav, .header-button { display: none; }.menu-button { display: block; }.hero { padding: 60px 24px 65px; }.hero-sticker { top: 38px; right: 28px; transform: scale(.72) rotate(8deg); transform-origin: top right; }.intro-bar { justify-content: space-between; gap: 15px; }.intro-bar > div:last-child { display: none; }.section-heading { align-items: start; flex-direction: column; gap: 22px; }.heading-side { width: 100%; }.category-grid, .results-grid { grid-template-columns: repeat(2, 1fr); }
