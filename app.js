@@ -26,6 +26,9 @@ const categories = [
   { title: 'Bakeries and Sweets', type: 'food', note: 'A little something sweet', places: [
     ['Manna Bakery & Deli', '6905 S. Broadway'], ['The Chocolate Therapist', '2560 W. Main St.'], ['Playa Bowls', '2490 W. Main St.'], ['Café Terracotta', '5649 S. Curtice St.'], ['Butterscotch Grove Bakery', '7301 S. Santa Fe Dr. #625'], ['Hearth Bakery', '5610 S. Curtice St'], ['Born2Bake', '2540 W. Main St.']
   ], tag: '' },
+  { title: 'Ice Cream', type: 'food', note: 'Cold, sweet, and local', places: [
+    ['Little Man Ice Cream', '2449 W. Main St.'], ['Inside Scoop Creamery', '5654 S. Prince St.']
+  ], tag: '' },
   { title: 'Fast-casual', type: 'experience', note: 'Quick, easy, and worth the stop', places: [
     ['The Rusty Tapp Colorado BBQ & Catering', '311 E. County Line Road'], ['Brad\'s Pit BBQ', '5950 S. Platte Canyon Road'], ['Ted\'s Montana Grill', '7301 S. Santa Fe Dr.'], ['Port of Subs', '40 W. Littleton Blvd. #204A'], ['Vibe Foods Superfood Bar', '7301 S. Santa Fe Dr.'], ["Snarf's Sandwiches", '2700 W. Bowles Ave. Suite B']
   ], tag: '' },
