@@ -24,7 +24,7 @@ const categories = [
     ['Hibachi V Express', '7961B S. Broadway'], ['Sushi Basho', '2700 W. Bowles Ave.'], ['Makizushico', '5950 S. Platte Canyon Rd. D23'], ['JP Nori Sushi & Asian Cuisine', '5302 S. Federal Circle'], ['Ninja Sushi', '7923 S. Broadway'], ['Smokin Fins - Littleton', '2575 W. Main St.'], ['PokeCo', '151 W. Mineral Ave.']
   ], tag: '' },
   { title: 'Breakfast', type: 'food', note: 'Start the day right', places: [
-    ['Momma\'s Kitchen', '1409 W. Littleton Blvd.'], ['Toast Fine Food & Coffee', '2630 W. Belleview Ave.'], ['NoNo\'s Cafe', '3005 W. County Line Road'], ['Bacon Social House', '2100 W. Littleton Blvd.'], ["Louis' Diner", '1500 W. Littleton Blvd.']
+    ['Momma\'s Kitchen', '1409 W. Littleton Blvd.'], ['Toast Fine Food & Coffee', '2630 W. Belleview Ave.'], ['NoNo\'s Cafe', '3005 W. County Line Road'], ['Bacon Social House', '2100 W. Littleton Blvd.'], ["Louis' Diner", '1500 W. Littleton Blvd.'], ["Santiago's", '5826 S. Lowell Blvd.']
   ], tag: '' },
   { title: 'Bakeries and Sweets', type: 'food', note: 'A little something sweet', places: [
     ['Manna Bakery & Deli', '6905 S. Broadway'], ['The Chocolate Therapist', '2560 W. Main St.'], ['Butterscotch Grove Bakery', '7301 S. Santa Fe Dr. #625'], ['Hearth Bakery', '5610 S. Curtice St'], ['Born2Bake', '2540 W. Main St.']
