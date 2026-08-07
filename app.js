@@ -25,6 +25,19 @@ const filters = document.querySelectorAll('.filter');
 const orders = new Map();
 const savedCategories = new Set();
 let draggedRestaurant = null;
+const storageKey = 'littleton-eats-rankings-v1';
+
+try {
+  const savedOrders = JSON.parse(localStorage.getItem(storageKey) || '{}');
+  Object.entries(savedOrders).forEach(([category, order]) => {
+    if (Array.isArray(order) && order.length) {
+      orders.set(category, order);
+      savedCategories.add(category);
+    }
+  });
+} catch {
+  // Local storage can be unavailable in private browsing.
+}
 
 function showToast(message) {
   const toast = document.querySelector('#toast');
@@ -49,9 +62,9 @@ function render() {
     <article class="category-card">
       <h3>${category.title}</h3>
       <div class="restaurant-list">
-        ${places.map(([name, address], index) => `<div class="restaurant-option ${index < 3 ? 'top-ranked' : ''}" draggable="true" data-category="${category.title}" data-place="${name}" data-index="${index}">
+        ${places.map(([name, address], index) => `<div class="restaurant-option" draggable="true" data-category="${category.title}" data-place="${name}" data-index="${index}">
           <span class="drag-handle" aria-hidden="true">☷</span>
-          <span class="rank-number">${index < 3 ? index + 1 : ''}</span>
+          <span class="rank-number">${index + 1}</span>
           <span class="restaurant-name"><b>${name}</b><small>${address}, Littleton, CO</small></span>
         </div>`).join('')}
       </div>
@@ -104,6 +117,11 @@ document.querySelector('#headerVote').addEventListener('click', () => document.q
 document.querySelector('#saveRankings').addEventListener('click', () => {
   if (!orders.size) return showToast('Drag restaurants into order first');
   orders.forEach((_, category) => savedCategories.add(category));
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(Object.fromEntries(orders)));
+  } catch {
+    // The ranking still works for this session if storage is unavailable.
+  }
   render();
   showToast('Rankings saved');
 });
