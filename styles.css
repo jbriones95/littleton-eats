@@ -99,6 +99,7 @@ h1 em, h2 em { color: var(--orange); font-style: normal; }
 .category-card:nth-child(13) { --card-bg: #d9dfd7; --bar-bg: #60766e; --list-bg: #e8efeb; }
 .category-card:nth-child(14) { --card-bg: #e1d6c9; --bar-bg: #78665a; --list-bg: #eee5d9; }
 .category-card:nth-child(15) { --card-bg: #dce1d3; --bar-bg: #5c7057; --list-bg: #e8efdf; }
+.category-card:nth-child(n) { transform: translateY(0); }.category-card:nth-child(n):hover { transform: translateY(-4px); }.category-card .restaurant-option, .category-card:first-child .restaurant-option { background: #fff; }
 .result-card:nth-child(1) { background: #efe4d3; }
 .result-card:nth-child(2) { background: #e4d8c0; }
 .result-card:nth-child(3) { background: #e7d0c7; }
