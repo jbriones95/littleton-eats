@@ -47,7 +47,6 @@ const categories = [
 ];
 
 const grid = document.querySelector('#categoryGrid');
-const results = document.querySelector('#results');
 const resultsGrid = document.querySelector('#resultsGrid');
 const orders = new Map();
 const rankedCategories = new Set();
@@ -101,14 +100,13 @@ function render() {
   document.querySelector('#voteCount').textContent = `${rankedCategories.size} of ${categories.length}`;
   document.querySelector('#progressBar').style.width = `${(rankedCategories.size / categories.length) * 100}%`;
   const ranked = categories.filter(category => orders.has(category.title));
-  resultsGrid.innerHTML = ranked.map(category => {
+  resultsGrid.innerHTML = ranked.length ? ranked.map(category => {
     const order = orders.get(category.title);
     return `<article class="result-card">
       <h3>${category.title}</h3>
       <ol>${order.map(name => `<li><span>${name}</span></li>`).join('')}</ol>
     </article>`;
-  }).join('');
-  results.hidden = !ranked.length;
+  }).join('') : '<p class="results-empty">Reorder a category above to see your results here.</p>';
   grid.querySelectorAll('.restaurant-option').forEach(row => {
     row.addEventListener('dragstart', event => {
       draggedRestaurant = { category: row.dataset.category, name: row.dataset.place };
