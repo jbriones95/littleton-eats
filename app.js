@@ -2,7 +2,7 @@ const categories = [
   { title: 'Coffee & Tea', type: 'drink', note: 'Your daily ritual', places: [
     ['Copper Door Coffee Roasters', '7301 S. Santa Fe Dr.'], ['Lost Coffee Café & Coffee Roastery', '1190 W. Littleton Blvd.'], ['Enchanted Grounds Coffeehouse', '3615 W. Bowles Ave.'], ['Nixon\'s Coffee House', '6399 S. Santa Fe Dr.'], ['Wild Goose Coffee in Denver Seminary', '6399 S. Santa Fe Dr.'], ['Black Rock Coffee Bar - Broadway', '7961 S. Broadway'], ['iN-TEA', '2440 W. Main St.'], ['DIRT Coffee Bar', '2506 W. Alamo Ave.']
   ], tag: 'Most loved' },
-  { title: 'Drinks', type: 'drink', note: 'Raise a glass, your way', places: [
+  { title: 'Drinks & Snacks', type: 'drink', note: 'Raise a glass, your way', places: [
     ['Social Bar & Lounge', '240 Village Park Dr. Ste 100'], ['Kate\'s Wine Bar', '5671 S. Nevada St.'], ['Tonic Zero Proof Bar', '5767 S. Rapp St.'], ['Honnibrook Mead Cottage', '5757 S. Rapp St.'], ['Jake\'s Brew Bar', '2530 Main St.'], ['Denver Beer Co. Littleton', '2409 Main St.'], ['Comet Brews', '5642 S. Sycamore St.'], ["Ned Kelly's Irish Pub", '5686 S. Sycamore St.'], ['Littleton Brewing Company', '1201 W. Littleton Blvd.']
   ], tag: '' },
   { title: 'Mexican', type: 'food', note: 'Big flavor, made close to home', places: [
@@ -58,15 +58,16 @@ let communityResults = { status: 'loading', categories: [] };
 try {
   const savedOrders = JSON.parse(localStorage.getItem(storageKey) || '{}');
   Object.entries(savedOrders).forEach(([category, order]) => {
-    const categoryData = categories.find(item => item.title === category);
+    const categoryName = category === 'Drinks' ? 'Drinks & Snacks' : category;
+    const categoryData = categories.find(item => item.title === categoryName);
     if (!categoryData || !Array.isArray(order)) return;
     const available = new Set(categoryData.places.map(([name]) => name));
     const validOrder = order.filter(name => available.has(name));
     const missing = categoryData.places.map(([name]) => name).filter(name => !validOrder.includes(name));
     const normalizedOrder = [...validOrder, ...missing];
     if (normalizedOrder.length) {
-      orders.set(category, normalizedOrder);
-      rankedCategories.add(category);
+      orders.set(categoryName, normalizedOrder);
+      rankedCategories.add(categoryName);
     }
   });
 } catch {
@@ -94,7 +95,7 @@ function renderCommunityResults() {
     resultsGrid.innerHTML = '<p class="results-empty">Community results are not available yet.</p>';
     return;
   }
-  const resultMap = new Map(communityResults.categories.map(category => [category.category, category]));
+  const resultMap = new Map(communityResults.categories.map(category => [category.category === 'Drinks' ? 'Drinks & Snacks' : category.category, category]));
   const rankedCategories = categories.map(category => resultMap.get(category.title)).filter(Boolean);
   resultsGrid.innerHTML = rankedCategories.length ? rankedCategories.map(category => `<article class="result-card">
     <h3>${escapeHtml(category.category)}</h3>

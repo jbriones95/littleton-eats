@@ -19,20 +19,25 @@ async function hashIp(ip, secret) {
   return [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2, '0')).join('');
 }
 
+function normalizeCategory(category) {
+  return category === 'Drinks' ? 'Drinks & Snacks' : category;
+}
+
 function aggregateRankings(rows) {
   const submissionTotals = new Map();
   rows.forEach(row => {
-    const key = `${row.submission_id}:${row.category}`;
+    const key = `${row.submission_id}:${normalizeCategory(row.category)}`;
     submissionTotals.set(key, Math.max(submissionTotals.get(key) || 0, row.rank));
   });
 
   const categories = new Map();
   rows.forEach(row => {
-    const total = submissionTotals.get(`${row.submission_id}:${row.category}`) || 1;
-    let category = categories.get(row.category);
+    const categoryName = normalizeCategory(row.category);
+    const total = submissionTotals.get(`${row.submission_id}:${categoryName}`) || 1;
+    let category = categories.get(categoryName);
     if (!category) {
       category = { voters: new Set(), restaurants: new Map() };
-      categories.set(row.category, category);
+      categories.set(categoryName, category);
     }
     category.voters.add(row.submission_id);
     let restaurant = category.restaurants.get(row.restaurant);
