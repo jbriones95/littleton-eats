@@ -21,7 +21,7 @@ async function hashIp(ip, secret) {
 
 function normalizeCategory(category) {
   if (category === 'Drinks') return 'Drinks & Snacks';
-  if (category === 'Ice Cream') return 'Ice Cream & Sweets';
+  if (category === 'Ice Cream' || category === 'Ice Cream & Sweets') return 'Ice Cream';
   return category;
 }
 

@@ -15,7 +15,7 @@ const categories = [
     ['Olde Towne Tavern', '2410 W. Main St.'], ['Black+Haus Tavern Littleton', '2439 W. Main St.'], ['Grande Station: A Social Bistro', '2299 W. Main St.'], ['Alibi\'s Bar & Grill', '7983 S. Broadway'], ['Celly\'s Bar and Grill in the Ice Ranch', '841 Southpark Dr.'], ['Cherry Cricket - Littleton', '819 W. Littleton Blvd.'], ['The Castle Bar & Grill', '6657 S. Broadway'], ['The 49th Food & Spirits - Littleton', '5350 S. Santa Fe Dr.']
   ], tag: '' },
   { title: 'American Style', type: 'food', note: 'Classic American plates', places: [
-    ['The Rusty Tapp Colorado BBQ & Catering', '311 E. County Line Road'], ['Brad\'s Pit BBQ', '5950 S. Platte Canyon Road'], ['Ted\'s Montana Grill', '7301 S. Santa Fe Dr.'], ['ViewHouse Littleton', '2680 W. Main St.'], ['The Melting Pot', '2707 W. Main St.'], ['Bistro 36 Drinkery and Eatery', '2620 W. Belleview Ave.'], ['Manning\'s Steaks and Spirits', '51 W. Dry Creek Ct.'], ['Café Terracotta', '5649 S. Curtice St.']
+    ['The Rusty Tapp Colorado BBQ & Catering', '311 E. County Line Road'], ['Brad\'s Pit BBQ', '5950 S. Platte Canyon Road'], ['ViewHouse Littleton', '2680 W. Main St.'], ['The Melting Pot', '2707 W. Main St.'], ['Bistro 36 Drinkery and Eatery', '2620 W. Belleview Ave.'], ['Manning\'s Steaks and Spirits', '51 W. Dry Creek Ct.'], ['Café Terracotta', '5649 S. Curtice St.']
   ], tag: '' },
   { title: 'Asian', type: 'food', note: 'Take your taste buds somewhere new', places: [
     ['Wang\'s Gourmet', '12 E. Arapahoe Road'], ['Sunflower Asian Café', '91 W. Mineral Ave.'], ['Wild Ginger Thai Restaurant', '399 W. Littleton Blvd.'], ['Yummy Station', '1140 W. Littleton Blvd.'], ['Beyond Thai', '2630 W. Belleview Ave. Ste 150']
@@ -27,10 +27,10 @@ const categories = [
     ['Momma\'s Kitchen', '1409 W. Littleton Blvd.'], ['Toast Fine Food & Coffee', '2630 W. Belleview Ave.'], ['NoNo\'s Cafe', '3005 W. County Line Road'], ['Bacon Social House', '2100 W. Littleton Blvd.'], ["Louis' Diner", '1500 W. Littleton Blvd.'], ["Santiago's", '5826 S. Lowell Blvd.']
   ], tag: '' },
   { title: 'Bakeries and Sweets', type: 'food', note: 'A little something sweet', places: [
-    ['Manna Bakery & Deli', '6905 S. Broadway'], ['The Chocolate Therapist', '2560 W. Main St.'], ['Butterscotch Grove Bakery', '7301 S. Santa Fe Dr. #625'], ['Hearth Bakery', '5610 S. Curtice St'], ['Born2Bake', '2540 W. Main St.']
+    ['Manna Bakery & Deli', '6905 S. Broadway'], ['The Chocolate Therapist', '2560 W. Main St.'], ['Butterscotch Grove Bakery', '7301 S. Santa Fe Dr. #625'], ['Hearth Bakery', '5610 S. Curtice St'], ['Born2Bake', '2540 W. Main St.'], ['Chez Lizeth Creperie', '5856 S. Lowell Blvd. #28']
   ], tag: '' },
-  { title: 'Ice Cream & Sweets', type: 'food', note: 'Cold, sweet, and local', places: [
-    ['Little Man Ice Cream', '2449 W. Main St.'], ['Inside Scoop Creamery', '5654 S. Prince St.'], ['Sweet Sundaes Ice Cream', '6205 S. Santa Fe Dr.'], ['Chez Lizeth Creperie', '5856 S. Lowell Blvd. #28'], ['Fresas Mexican Ice Cream', '3625 W. Bowles Ave. Unit 17'], ['Neveria Juarez', '1360 W. Littleton Blvd.']
+  { title: 'Ice Cream', type: 'food', note: 'Cold, sweet, and local', places: [
+    ['Little Man Ice Cream', '2449 W. Main St.'], ['Inside Scoop Creamery', '5654 S. Prince St.'], ['Sweet Sundaes Ice Cream', '6205 S. Santa Fe Dr.'], ['Fresas Mexican Ice Cream', '3625 W. Bowles Ave. Unit 17'], ['Neveria Juarez', '1360 W. Littleton Blvd.']
   ], tag: '' },
   { title: 'Fast-casual', type: 'experience', note: 'Quick, easy, and worth the stop', places: [
     ['Port of Subs', '40 W. Littleton Blvd. #204A'], ["Snarf's Sandwiches", '2700 W. Bowles Ave. Suite B'], ["Harley's: A Hot Dog Revolution", '1500 W. Littleton Blvd.'], ["Call Your Mother Lil' Deli", '7301 S. Santa Fe Dr.'], ['Playa Bowls', '2490 W. Main St.'], ['Latke Love', '699 W. Littleton Blvd.']
@@ -58,7 +58,7 @@ let communityResults = { status: 'loading', categories: [] };
 try {
   const savedOrders = JSON.parse(localStorage.getItem(storageKey) || '{}');
   Object.entries(savedOrders).forEach(([category, order]) => {
-    const categoryName = category === 'Drinks' ? 'Drinks & Snacks' : category === 'Ice Cream' ? 'Ice Cream & Sweets' : category;
+    const categoryName = category === 'Drinks' ? 'Drinks & Snacks' : category === 'Ice Cream' || category === 'Ice Cream & Sweets' ? 'Ice Cream' : category;
     const categoryData = categories.find(item => item.title === categoryName);
     if (!categoryData || !Array.isArray(order)) return;
     const available = new Set(categoryData.places.map(([name]) => name));
@@ -95,7 +95,7 @@ function renderCommunityResults() {
     resultsGrid.innerHTML = '<p class="results-empty">Community results are not available yet.</p>';
     return;
   }
-  const resultMap = new Map(communityResults.categories.map(category => [category.category === 'Drinks' ? 'Drinks & Snacks' : category.category === 'Ice Cream' ? 'Ice Cream & Sweets' : category.category, category]));
+  const resultMap = new Map(communityResults.categories.map(category => [category.category === 'Drinks' ? 'Drinks & Snacks' : category.category === 'Ice Cream' || category.category === 'Ice Cream & Sweets' ? 'Ice Cream' : category.category, category]));
   const rankedCategories = categories.map(category => resultMap.get(category.title)).filter(Boolean);
   resultsGrid.innerHTML = rankedCategories.length ? rankedCategories.map(category => `<article class="result-card">
     <h3>${escapeHtml(category.category)}</h3>
@@ -126,8 +126,9 @@ function render() {
     const originalPlaces = category.places.map(([name]) => name);
     const orderedNames = orders.get(category.title) || originalPlaces;
     const places = orderedNames.map(name => category.places.find(([place]) => place === name));
-    return `
+     return `
     <article class="category-card">
+      <button class="category-info" type="button" aria-label="More information about ${category.title}"><span aria-hidden="true">i</span><span class="category-tooltip" role="tooltip">Category information coming soon.</span></button>
       <h3>${category.title}</h3>
       <div class="restaurant-list">
         ${places.map(([name, address], index) => `<div class="restaurant-option" draggable="true" data-category="${category.title}" data-place="${name}" data-index="${index}">
