@@ -26,7 +26,6 @@ const categories = [
 ];
 
 const grid = document.querySelector('#categoryGrid');
-const search = document.querySelector('#searchInput');
 const orders = new Map();
 const rankedCategories = new Set();
 let draggedRestaurant = null;
@@ -60,11 +59,7 @@ function showToast(message) {
 }
 
 function render() {
-  const query = search.value.toLowerCase().trim();
-  grid.innerHTML = categories.filter(category => {
-    const matchesSearch = !query || `${category.title} ${category.places.flat().join(' ')}`.toLowerCase().includes(query);
-    return matchesSearch;
-  }).map(category => {
+  grid.innerHTML = categories.map(category => {
     const originalPlaces = category.places.map(([name]) => name);
     const orderedNames = orders.get(category.title) || originalPlaces;
     const places = orderedNames.map(name => category.places.find(([place]) => place === name));
@@ -117,7 +112,6 @@ function render() {
   });
 }
 
-search.addEventListener('input', render);
 document.querySelector('#headerVote').addEventListener('click', () => document.querySelector('#categories').scrollIntoView({ behavior: 'smooth' }));
 document.querySelector('#saveRankings').addEventListener('click', async () => {
   if (!orders.size) return showToast('Drag restaurants into order first');
