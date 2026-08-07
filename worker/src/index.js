@@ -20,7 +20,9 @@ async function hashIp(ip, secret) {
 }
 
 function normalizeCategory(category) {
-  return category === 'Drinks' ? 'Drinks & Snacks' : category;
+  if (category === 'Drinks') return 'Drinks & Snacks';
+  if (category === 'Ice Cream') return 'Ice Cream & Sweets';
+  return category;
 }
 
 function aggregateRankings(rows) {

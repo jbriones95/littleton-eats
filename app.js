@@ -1,21 +1,21 @@
 const categories = [
   { title: 'Coffee & Tea', type: 'drink', note: 'Your daily ritual', places: [
-    ['Copper Door Coffee Roasters', '7301 S. Santa Fe Dr.'], ['Lost Coffee Café & Coffee Roastery', '1190 W. Littleton Blvd.'], ['Enchanted Grounds Coffeehouse', '3615 W. Bowles Ave.'], ['Nixon\'s Coffee House', '6399 S. Santa Fe Dr.'], ['Wild Goose Coffee in Denver Seminary', '6399 S. Santa Fe Dr.'], ['Black Rock Coffee Bar - Broadway', '7961 S. Broadway'], ['iN-TEA', '2440 W. Main St.'], ['DIRT Coffee Bar', '2506 W. Alamo Ave.']
+    ['Copper Door Coffee Roasters', '7301 S. Santa Fe Dr.'], ['Lost Coffee Café & Coffee Roastery', '1190 W. Littleton Blvd.'], ['Enchanted Grounds Coffeehouse', '3615 W. Bowles Ave.'], ['Nixon\'s Coffee House', '6399 S. Santa Fe Dr.'], ['Wild Goose Coffee in Denver Seminary', '6399 S. Santa Fe Dr.'], ['Black Rock Coffee Bar - Broadway', '7961 S. Broadway'], ['iN-TEA', '2440 W. Main St.'], ['DIRT Coffee Bar', '2506 W. Alamo Ave.'], ['Atlas Coffee', '6504 S. Broadway']
   ], tag: 'Most loved' },
   { title: 'Drinks & Snacks', type: 'drink', note: 'Raise a glass, your way', places: [
-    ['Social Bar & Lounge', '240 Village Park Dr. Ste 100'], ['Kate\'s Wine Bar', '5671 S. Nevada St.'], ['Tonic Zero Proof Bar', '5767 S. Rapp St.'], ['Honnibrook Mead Cottage', '5757 S. Rapp St.'], ['Jake\'s Brew Bar', '2530 Main St.'], ['Denver Beer Co. Littleton', '2409 Main St.'], ['Comet Brews', '5642 S. Sycamore St.'], ["Ned Kelly's Irish Pub", '5686 S. Sycamore St.'], ['Littleton Brewing Company', '1201 W. Littleton Blvd.']
+    ['Social Bar & Lounge', '240 Village Park Dr. Ste 100'], ['Kate\'s Wine Bar', '5671 S. Nevada St.'], ['Tonic Zero Proof Bar', '5767 S. Rapp St.'], ['Honnibrook Mead Cottage', '5757 S. Rapp St.'], ['Jake\'s Brew Bar', '2530 Main St.'], ['Denver Beer Co. Littleton', '2409 Main St.'], ['Comet Brews', '5642 S. Sycamore St.'], ["Ned Kelly's Irish Pub", '5686 S. Sycamore St.'], ['Littleton Brewing Company', '1201 W. Littleton Blvd.'], ['Colorado Pinball Pub', '6209 S. Santa Fe Dr.'], ['Breckenridge Brewery', '2890 Brewery Lane']
   ], tag: '' },
   { title: 'Mexican', type: 'food', note: 'Big flavor, made close to home', places: [
-    ['Los Portales Mexican Restaurant', '5350 S. Santa Fe Dr.'], ['El Lucero Salvadoran & Mexican Restaurant', '1500 W. Littleton Blvd. #110 A'], ['Don Juan\'s Mexican Grill', '3625 W. Bowles Ave.'], ['Cencalli Taqueria', 'Littleton, CO 80120'], ['Mi Cocina Express - Broadway', '137 W. County Line Road'], ['Old Santa Fe Express Mexican Grille', '1500 W. Littleton Blvd.'], ['Mama Sol Cafe', '6439 S. Broadway'], ['4G\'s at Columbine', '5950 S. Platte Canyon Road'], ['The Alley: Mountain Mexican', '2420 W. Main St.'], ['Pàlenque Cocina Y Agaveria', '2609 W. Main St.'], ['Taco House', '1390 W. Littleton Blvd.']
+    ['Los Portales Mexican Restaurant', '5350 S. Santa Fe Dr.'], ['El Lucero Salvadoran & Mexican Restaurant', '1500 W. Littleton Blvd. #110 A'], ['Don Juan\'s Mexican Grill', '3625 W. Bowles Ave.'], ['Cencalli Taqueria', 'Littleton, CO 80120'], ['Mi Cocina Express - Broadway', '137 W. County Line Road'], ['Old Santa Fe Express Mexican Grille', '1500 W. Littleton Blvd.'], ['Mama Sol Cafe', '6439 S. Broadway'], ['4G\'s at Columbine', '5950 S. Platte Canyon Road'], ['The Alley: Mountain Mexican', '2420 W. Main St.'], ['Pàlenque Cocina Y Agaveria', '2609 W. Main St.'], ['Taco House', '1390 W. Littleton Blvd.'], ["Chenton's Tacos", '6429 S. Broadway']
   ], tag: 'Hot category' },
   { title: 'Pizza & Italian', type: 'food', note: 'A slice of the good life', places: [
-    ['Old Fashioned Italian Deli', '395 W. Littleton Blvd.'], ['The Garlic Knot Pizza & Pasta', '1621 W. Canal Circle'], ['Big Daddy\'s Pizza', '5829 S. Broadway'], ['Piccino Wood Oven Pizza', '5350 S. Santa Fe Dr.'], ['Romano\'s Italian Restaurant & Pizzeria', '5666 S. Windermere St.'], ['Walter\'s 303 Pizzeria & Publik House', '5194 S. Lowell Blvd.'], ['Anthony\'s Pizza & Pasta', '2610 W. Belleview Ave.'], ['Angelo\'s Taverna', '6685 S. Santa Fe Dr.'], ['Colore Italian', '5950 S. Platte Canyon Rd. # A1']
+    ['Old Fashioned Italian Deli', '395 W. Littleton Blvd.'], ['The Garlic Knot Pizza & Pasta', '1621 W. Canal Circle'], ['Big Daddy\'s Pizza', '5829 S. Broadway'], ['Piccino Wood Oven Pizza', '5350 S. Santa Fe Dr.'], ['Romano\'s Italian Restaurant & Pizzeria', '5666 S. Windermere St.'], ['Walter\'s 303 Pizzeria & Publik House', '5194 S. Lowell Blvd.'], ['Anthony\'s Pizza & Pasta', '2610 W. Belleview Ave.'], ['Angelo\'s Taverna', '6685 S. Santa Fe Dr.'], ['Colore Italian', '5950 S. Platte Canyon Rd. # A1'], ['Capitol Pizza', '1500 W. Littleton Blvd. Ste 126']
   ], tag: '' },
   { title: 'Bars & Burgers', type: 'experience', note: 'Good food, good company', places: [
-    ['Olde Towne Tavern', '2410 W. Main St.'], ['Black+Haus Tavern Littleton', '2439 W. Main St.'], ['Grande Station: A Social Bistro', '2299 W. Main St.'], ['Colorado Pinball Pub', '6209 S. Santa Fe Dr.'], ['Alibi\'s Bar & Grill', '7983 S. Broadway'], ['Celly\'s Bar and Grill in the Ice Ranch', '841 Southpark Dr.'], ['Cherry Cricket - Littleton', '819 W. Littleton Blvd.'], ['The Castle Bar & Grill', '6657 S. Broadway'], ['The 49th Food & Spirits - Littleton', '5350 S. Santa Fe Dr.'], ['Breckenridge Brewery', '2890 Brewery Lane']
+    ['Olde Towne Tavern', '2410 W. Main St.'], ['Black+Haus Tavern Littleton', '2439 W. Main St.'], ['Grande Station: A Social Bistro', '2299 W. Main St.'], ['Alibi\'s Bar & Grill', '7983 S. Broadway'], ['Celly\'s Bar and Grill in the Ice Ranch', '841 Southpark Dr.'], ['Cherry Cricket - Littleton', '819 W. Littleton Blvd.'], ['The Castle Bar & Grill', '6657 S. Broadway'], ['The 49th Food & Spirits - Littleton', '5350 S. Santa Fe Dr.']
   ], tag: '' },
   { title: 'American Style', type: 'food', note: 'Classic American plates', places: [
-    ['The Rusty Tapp Colorado BBQ & Catering', '311 E. County Line Road'], ['Brad\'s Pit BBQ', '5950 S. Platte Canyon Road'], ['Ted\'s Montana Grill', '7301 S. Santa Fe Dr.'], ['ViewHouse Littleton', '2680 W. Main St.'], ['The Melting Pot', '2707 W. Main St.'], ['Bistro 36 Drinkery and Eatery', '2620 W. Belleview Ave.'], ['Manning\'s Steaks and Spirits', '51 W. Dry Creek Ct.']
+    ['The Rusty Tapp Colorado BBQ & Catering', '311 E. County Line Road'], ['Brad\'s Pit BBQ', '5950 S. Platte Canyon Road'], ['Ted\'s Montana Grill', '7301 S. Santa Fe Dr.'], ['ViewHouse Littleton', '2680 W. Main St.'], ['The Melting Pot', '2707 W. Main St.'], ['Bistro 36 Drinkery and Eatery', '2620 W. Belleview Ave.'], ['Manning\'s Steaks and Spirits', '51 W. Dry Creek Ct.'], ['Café Terracotta', '5649 S. Curtice St.']
   ], tag: '' },
   { title: 'Asian', type: 'food', note: 'Take your taste buds somewhere new', places: [
     ['Wang\'s Gourmet', '12 E. Arapahoe Road'], ['Sunflower Asian Café', '91 W. Mineral Ave.'], ['Wild Ginger Thai Restaurant', '399 W. Littleton Blvd.'], ['Yummy Station', '1140 W. Littleton Blvd.']
@@ -24,16 +24,16 @@ const categories = [
     ['Hibachi V Express', '7961B S. Broadway'], ['Sushi Basho', '2700 W. Bowles Ave.'], ['Makizushico', '5950 S. Platte Canyon Rd. D23'], ['JP Nori Sushi & Asian Cuisine', '5302 S. Federal Circle'], ['Ninja Sushi', '7923 S. Broadway'], ['Smokin Fins - Littleton', '2575 W. Main St.'], ['PokeCo', '151 W. Mineral Ave.']
   ], tag: '' },
   { title: 'Breakfast', type: 'food', note: 'Start the day right', places: [
-    ['Latke Love', '699 W. Littleton Blvd.'], ['Momma\'s Kitchen', '1409 W. Littleton Blvd.'], ['Blend Nutrition', '191 W. Mineral Ave.'], ['Toast Fine Food & Coffee', '2630 W. Belleview Ave.'], ['NoNo\'s Cafe', '3005 W. County Line Road'], ['Bacon Social House', '2100 W. Littleton Blvd.'], ["Louis' Diner", '1500 W. Littleton Blvd.'], ['Chez Lizeth Creperie', '5856 S. Lowell Blvd. #28']
+    ['Momma\'s Kitchen', '1409 W. Littleton Blvd.'], ['Toast Fine Food & Coffee', '2630 W. Belleview Ave.'], ['NoNo\'s Cafe', '3005 W. County Line Road'], ['Bacon Social House', '2100 W. Littleton Blvd.'], ["Louis' Diner", '1500 W. Littleton Blvd.']
   ], tag: '' },
   { title: 'Bakeries and Sweets', type: 'food', note: 'A little something sweet', places: [
-    ['Manna Bakery & Deli', '6905 S. Broadway'], ['The Chocolate Therapist', '2560 W. Main St.'], ['Playa Bowls', '2490 W. Main St.'], ['Café Terracotta', '5649 S. Curtice St.'], ['Butterscotch Grove Bakery', '7301 S. Santa Fe Dr. #625'], ['Hearth Bakery', '5610 S. Curtice St'], ['Born2Bake', '2540 W. Main St.']
+    ['Manna Bakery & Deli', '6905 S. Broadway'], ['The Chocolate Therapist', '2560 W. Main St.'], ['Butterscotch Grove Bakery', '7301 S. Santa Fe Dr. #625'], ['Hearth Bakery', '5610 S. Curtice St'], ['Born2Bake', '2540 W. Main St.']
   ], tag: '' },
-  { title: 'Ice Cream', type: 'food', note: 'Cold, sweet, and local', places: [
-    ['Little Man Ice Cream', '2449 W. Main St.'], ['Inside Scoop Creamery', '5654 S. Prince St.'], ['Sweet Sundaes Ice Cream', '6205 S. Santa Fe Dr.']
+  { title: 'Ice Cream & Sweets', type: 'food', note: 'Cold, sweet, and local', places: [
+    ['Little Man Ice Cream', '2449 W. Main St.'], ['Inside Scoop Creamery', '5654 S. Prince St.'], ['Sweet Sundaes Ice Cream', '6205 S. Santa Fe Dr.'], ['Chez Lizeth Creperie', '5856 S. Lowell Blvd. #28']
   ], tag: '' },
   { title: 'Fast-casual', type: 'experience', note: 'Quick, easy, and worth the stop', places: [
-    ['Port of Subs', '40 W. Littleton Blvd. #204A'], ["Snarf's Sandwiches", '2700 W. Bowles Ave. Suite B'], ["Harley's: A Hot Dog Revolution", '1500 W. Littleton Blvd.'], ["Call Your Mother Lil' Deli", '7301 S. Santa Fe Dr.']
+    ['Port of Subs', '40 W. Littleton Blvd. #204A'], ["Snarf's Sandwiches", '2700 W. Bowles Ave. Suite B'], ["Harley's: A Hot Dog Revolution", '1500 W. Littleton Blvd.'], ["Call Your Mother Lil' Deli", '7301 S. Santa Fe Dr.'], ['Playa Bowls', '2490 W. Main St.'], ['Latke Love', '699 W. Littleton Blvd.']
   ], tag: '' },
   { title: 'Indian', type: 'food', note: 'Warm spices and comfort', places: [
     ['Taj Mahal Indian Cuisine', '5350 S. Santa Fe Dr. C'], ['Zaika Indian Cuisine', '151 W. Mineral Ave.'], ['Haveli Indian Cuisine', '301 E. County Line Road']
@@ -58,7 +58,7 @@ let communityResults = { status: 'loading', categories: [] };
 try {
   const savedOrders = JSON.parse(localStorage.getItem(storageKey) || '{}');
   Object.entries(savedOrders).forEach(([category, order]) => {
-    const categoryName = category === 'Drinks' ? 'Drinks & Snacks' : category;
+    const categoryName = category === 'Drinks' ? 'Drinks & Snacks' : category === 'Ice Cream' ? 'Ice Cream & Sweets' : category;
     const categoryData = categories.find(item => item.title === categoryName);
     if (!categoryData || !Array.isArray(order)) return;
     const available = new Set(categoryData.places.map(([name]) => name));
@@ -95,7 +95,7 @@ function renderCommunityResults() {
     resultsGrid.innerHTML = '<p class="results-empty">Community results are not available yet.</p>';
     return;
   }
-  const resultMap = new Map(communityResults.categories.map(category => [category.category === 'Drinks' ? 'Drinks & Snacks' : category.category, category]));
+  const resultMap = new Map(communityResults.categories.map(category => [category.category === 'Drinks' ? 'Drinks & Snacks' : category.category === 'Ice Cream' ? 'Ice Cream & Sweets' : category.category, category]));
   const rankedCategories = categories.map(category => resultMap.get(category.title)).filter(Boolean);
   resultsGrid.innerHTML = rankedCategories.length ? rankedCategories.map(category => `<article class="result-card">
     <h3>${escapeHtml(category.category)}</h3>
