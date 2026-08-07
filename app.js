@@ -126,10 +126,14 @@ function render() {
     const originalPlaces = category.places.map(([name]) => name);
     const orderedNames = orders.get(category.title) || originalPlaces;
     const places = orderedNames.map(name => category.places.find(([place]) => place === name));
-     return `
+    const categoryExplanation = category.type === 'food'
+      ? 'The places listed below are small businesses or regional businesses in the City of Littleton. If a business has locations in more than 4 states, it is not included in this list. If a business eventually has more than 4 states, it will be removed.'
+      : 'Category information coming soon.';
+    return `
     <article class="category-card">
-      <button class="category-info" type="button" aria-label="More information about ${category.title}"><span aria-hidden="true">i</span><span class="category-tooltip" role="tooltip">Category information coming soon.</span></button>
+      <button class="category-info" type="button" aria-label="More information about ${category.title}"><span aria-hidden="true">i</span><span class="category-tooltip" role="tooltip">${categoryExplanation}</span></button>
       <h3>${category.title}</h3>
+      ${category.type === 'food' ? '<span class="food-options-label">Food options</span>' : ''}
       <div class="restaurant-list">
         ${places.map(([name, address], index) => `<div class="restaurant-option" draggable="true" data-category="${category.title}" data-place="${name}" data-index="${index}">
           <span class="drag-handle" aria-hidden="true">☷</span>
