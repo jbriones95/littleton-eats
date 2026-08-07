@@ -6,7 +6,7 @@ const categories = [
     ['Los Portales Mexican Restaurant', '5350 S. Santa Fe Dr.'], ['El Lucero Salvadoran & Mexican Restaurant', '1500 W. Littleton Blvd. #110 A'], ['Don Juan\'s Mexican Grill', '3625 W. Bowles Ave.'], ['Cencalli Taqueria', 'Littleton, CO 80120'], ['Harley\'s: A Hot Dog Revolution', '1500 W. Littleton Blvd.'], ['Mi Cocina Express - Broadway', '137 W. County Line Road'], ['Old Santa Fe Express Mexican Grille', '1500 W. Littleton Blvd.'], ['Mama Sol Cafe', '6439 S. Broadway'], ['4G\'s at Columbine', '5950 S. Platte Canyon Road']
   ], tag: 'Hot category' },
   { title: 'Pizza & Italian', type: 'food', note: 'A slice of the good life', places: [
-    ['Old Fashioned Italian Deli', '395 W. Littleton Blvd.'], ['The Garlic Knot Pizza & Pasta', '1621 W. Canal Circle'], ['Big Daddy\'s Pizza', '5829 S. Broadway'], ['Piccino Wood Oven Pizza', '5350 S. Santa Fe Dr.'], ['Romano\'s Italian Restaurant & Pizzeria', '5666 S. Windermere St.'], ['Walter\'s 303 Pizzeria & Publik House', '5194 S. Lowell Blvd.'], ['Angelo\'s Taverna', '6685 S. Santa Fe Dr.'], ['Anthony\'s Pizza & Pasta', '2610 W. Belleview Ave.']
+    ['Old Fashioned Italian Deli', '395 W. Littleton Blvd.'], ['The Garlic Knot Pizza & Pasta', '1621 W. Canal Circle'], ['Big Daddy\'s Pizza', '5829 S. Broadway'], ['Piccino Wood Oven Pizza', '5350 S. Santa Fe Dr.'], ['Romano\'s Italian Restaurant & Pizzeria', '5666 S. Windermere St.'], ['Walter\'s 303 Pizzeria & Publik House', '5194 S. Lowell Blvd.'], ['Anthony\'s Pizza & Pasta', '2610 W. Belleview Ave.']
   ], tag: '' },
   { title: 'Bars & Burgers', type: 'experience', note: 'Good food, good company', places: [
     ['Olde Towne Tavern', '2410 W. Main St.'], ['Black+Haus Tavern Littleton', '2439 W. Main St.'], ['Manning\'s Steaks and Spirits', '51 W. Dry Creek Ct.'], ['ViewHouse Littleton', '2680 W. Main St.'], ['Grande Station: A Social Bistro', '2299 W. Main St.'], ['Colorado Pinball Pub', '6209 S. Santa Fe Dr.'], ['Alibi\'s Bar & Grill', '7983 S. Broadway'], ['Celly\'s Bar and Grill in the Ice Ranch', '841 Southpark Dr.'], ['Cherry Cricket - Littleton', '819 W. Littleton Blvd.'], ['The Castle Bar & Grill', '6657 S. Broadway'], ['The 49th Food & Spirits - Littleton', '5350 S. Santa Fe Dr.'], ['Breckenridge Brewery', '2890 Brewery Lane'], ['The Melting Pot', '2707 W. Main St.']
@@ -15,7 +15,7 @@ const categories = [
     ['The Rusty Tapp Colorado BBQ & Catering', '311 E. County Line Road'], ['Brad\'s Pit BBQ', '5950 S. Platte Canyon Road'], ['Ted\'s Montana Grill', '7301 S. Santa Fe Dr.']
   ], tag: '' },
   { title: 'Asian', type: 'food', note: 'Take your taste buds somewhere new', places: [
-    ['Zaika Indian Cuisine', '151 W. Mineral Ave.'], ['Haveli Indian Cuisine', '301 E. County Line Road'], ['PokeCo', '151 W. Mineral Ave.'], ['Wang\'s Gourmet', '12 E. Arapahoe Road'], ['Sunflower Asian Café', '91 W. Mineral Ave.'], ['Wild Ginger Thai Restaurant', '399 W. Littleton Blvd.'], ['Smokin Fins - Littleton', '2575 W. Main St.'], ['Hujra Kebab & Gyros', '2897 W. Belleview Ave. A'], ['Gyros Town Grill', '1399 W. Littleton Blvd.'], ['Yummy Station', '1140 W. Littleton Blvd.']
+    ['Zaika Indian Cuisine', '151 W. Mineral Ave.'], ['Haveli Indian Cuisine', '301 E. County Line Road'], ['PokeCo', '151 W. Mineral Ave.'], ['Wang\'s Gourmet', '12 E. Arapahoe Road'], ['Sunflower Asian Café', '91 W. Mineral Ave.'], ['Wild Ginger Thai Restaurant', '399 W. Littleton Blvd.'], ['Smokin Fins - Littleton', '2575 W. Main St.'], ['Yummy Station', '1140 W. Littleton Blvd.']
   ], tag: '' },
   { title: 'Japanese', type: 'food', note: 'Sushi, hibachi, and more', places: [
     ['Hibachi V Express', '7961B S. Broadway'], ['Sushi Basho', '2700 W. Bowles Ave.'], ['Makizushico', '5950 S. Platte Canyon Rd. D23'], ['JP Nori Sushi & Asian Cuisine', '5302 S. Federal Circle'], ['Ninja Sushi', '7923 S. Broadway']
@@ -30,7 +30,10 @@ const categories = [
     ['The Rusty Tapp Colorado BBQ & Catering', '311 E. County Line Road'], ['Brad\'s Pit BBQ', '5950 S. Platte Canyon Road'], ['Ted\'s Montana Grill', '7301 S. Santa Fe Dr.'], ['Port of Subs', '40 W. Littleton Blvd. #204A']
   ], tag: '' },
   { title: 'Vietnamese', type: 'food', note: 'Comfort in a bowl', places: [
-    ['Pho Real', '2399 W. Main St.'], ['Pho Littleton', '389 W. Littleton Blvd.'], ['Pho 99 Vietnamese Noodles & Grill', '211 E. County Line Road'], ['VinaMeals', '1500 W. Littleton Blvd. #110 A']
+    ['Pho Real', '2399 W. Main St.'], ['Pho Littleton', '389 W. Littleton Blvd.'], ['Pho 99 Vietnamese Noodles & Grill', '211 E. County Line Road'], ['Pho Broadway', '6645 S. Broadway'], ['VinaMeals', '1500 W. Littleton Blvd. #110 A']
+  ], tag: '' },
+  { title: 'Mediterranean', type: 'food', note: 'Grilled, herby, and bright', places: [
+    ['Hujra Kebab & Gyros', '2897 W. Belleview Ave. A'], ['Gyros Town Grill', '1399 W. Littleton Blvd.'], ['Angelo\'s Taverna', '6685 S. Santa Fe Dr.']
   ], tag: '' }
 ];
 
