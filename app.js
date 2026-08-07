@@ -64,10 +64,10 @@ function shuffle(items) {
   return shuffled;
 }
 
-const displayCategories = shuffle(categories.map(category => ({
+const displayCategories = categories.map(category => ({
   ...category,
   places: shuffle(category.places)
-})));
+})).sort((left, right) => right.places.length - left.places.length);
 
 try {
   const savedOrders = JSON.parse(localStorage.getItem(storageKey) || '{}');
