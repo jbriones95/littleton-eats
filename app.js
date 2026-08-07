@@ -6,16 +6,16 @@ const categories = [
     ['Los Portales Mexican Restaurant', '5350 S. Santa Fe Dr.'], ['El Lucero Salvadoran & Mexican Restaurant', '1500 W. Littleton Blvd. #110 A'], ['Don Juan\'s Mexican Grill', '3625 W. Bowles Ave.'], ['Cencalli Taqueria', 'Littleton, CO 80120'], ['Harley\'s: A Hot Dog Revolution', '1500 W. Littleton Blvd.'], ['Mi Cocina Express - Broadway', '137 W. County Line Road'], ['Old Santa Fe Express Mexican Grille', '1500 W. Littleton Blvd.'], ['Mama Sol Cafe', '6439 S. Broadway']
   ], tag: 'Hot category' },
   { title: 'Pizza', type: 'food', note: 'A slice of the good life', places: [
-    ['Old Fashioned Italian Deli', '395 W. Littleton Blvd.'], ['The Garlic Knot Pizza & Pasta', '1621 W. Canal Circle'], ['Jet\'s Pizza', '7935 S. Broadway'], ['Big Daddy\'s Pizza', '5829 S. Broadway'], ['Piccino Wood Oven Pizza', '5350 S. Santa Fe Dr.'], ['Romano\'s Italian Restaurant & Pizzeria', '5666 S. Windermere St.'], ['Walter\'s 303 Pizzeria & Publik House', '5194 S. Lowell Blvd.'], ['Angelo\'s Taverna', '6685 S. Santa Fe Dr.']
+    ['Old Fashioned Italian Deli', '395 W. Littleton Blvd.'], ['The Garlic Knot Pizza & Pasta', '1621 W. Canal Circle'], ['Big Daddy\'s Pizza', '5829 S. Broadway'], ['Piccino Wood Oven Pizza', '5350 S. Santa Fe Dr.'], ['Romano\'s Italian Restaurant & Pizzeria', '5666 S. Windermere St.'], ['Walter\'s 303 Pizzeria & Publik House', '5194 S. Lowell Blvd.'], ['Angelo\'s Taverna', '6685 S. Santa Fe Dr.']
   ], tag: '' },
   { title: 'Bars', type: 'experience', note: 'Good food, good company', places: [
     ['Olde Towne Tavern', '2410 W. Main St.'], ['Black+Haus Tavern Littleton', '2439 W. Main St.'], ['Manning\'s Steaks and Spirits', '51 W. Dry Creek Ct.'], ['ViewHouse Littleton', '2680 W. Main St.'], ['Grande Station: A Social Bistro', '2299 W. Main St.'], ['Colorado Pinball Pub', '6209 S. Santa Fe Dr.'], ['Alibi\'s Bar & Grill', '7983 S. Broadway'], ['Celly\'s Bar and Grill in the Ice Ranch', '841 Southpark Dr.'], ['Cherry Cricket - Littleton', '819 W. Littleton Blvd.'], ['The Castle Bar & Grill', '6657 S. Broadway'], ['The 49th Food & Spirits - Littleton', '5350 S. Santa Fe Dr.']
   ], tag: '' },
   { title: 'Global', type: 'food', note: 'Take your taste buds somewhere new', places: [
-    ['Zaika Indian Cuisine', '151 W. Mineral Ave.'], ['Haveli Indian Cuisine', '301 E. County Line Road'], ['PokeCo', '151 W. Mineral Ave.'], ['Wang\'s Gourmet', '12 E. Arapahoe Road'], ['Hibachi V Express', '7961B S. Broadway'], ['Pho Real', '2399 W. Main St.'], ['Sunflower Asian Café', '91 W. Mineral Ave.'], ['Sushi Basho', '2700 W. Bowles Ave.'], ['Smokin Fins - Littleton', '2575 W. Main St.']
+    ['Zaika Indian Cuisine', '151 W. Mineral Ave.'], ['Haveli Indian Cuisine', '301 E. County Line Road'], ['PokeCo', '151 W. Mineral Ave.'], ['Wang\'s Gourmet', '12 E. Arapahoe Road'], ['Hibachi V Express', '7961B S. Broadway'], ['Pho Real', '2399 W. Main St.'], ['Sunflower Asian Café', '91 W. Mineral Ave.'], ['Sushi Basho', '2700 W. Bowles Ave.'], ['Smokin Fins - Littleton', '2575 W. Main St.'], ['VinaMeals', '1500 W. Littleton Blvd. #110 A'], ['Hujra Kebab & Gyros', '2897 W. Belleview Ave. A']
   ], tag: '' },
   { title: 'Neighborhood', type: 'experience', note: 'The spots that feel like yours', places: [
-    ['VinaMeals', '1500 W. Littleton Blvd. #110 A'], ['The Rusty Tapp Colorado BBQ & Catering', '311 E. County Line Road'], ['Fresh Market & Community Kitchen', '1500 W. Littleton Blvd.'], ['Breckenridge Brewery', '2890 Brewery Lane'], ['Brad\'s Pit BBQ', '5950 S. Platte Canyon Road'], ['Ted\'s Montana Grill', '7301 S. Santa Fe Dr.'], ['Latke Love', '699 W. Littleton Blvd.'], ['Momma\'s Kitchen', '1409 W. Littleton Blvd.'], ['Daddy\'s Chicken Shack®', '7330 S. Broadway'], ['Manna Bakery & Deli', '6905 S. Broadway'], ['The Chocolate Therapist', '2560 W. Main St.'], ['Playa Bowls', '2490 W. Main St.'], ['Café Terracotta', '5649 S. Curtice St.'], ['4G\'s at Columbine', '5950 S. Platte Canyon Road']
+    ['The Rusty Tapp Colorado BBQ & Catering', '311 E. County Line Road'], ['Fresh Market & Community Kitchen', '1500 W. Littleton Blvd.'], ['Breckenridge Brewery', '2890 Brewery Lane'], ['Brad\'s Pit BBQ', '5950 S. Platte Canyon Road'], ['Ted\'s Montana Grill', '7301 S. Santa Fe Dr.'], ['Latke Love', '699 W. Littleton Blvd.'], ['Momma\'s Kitchen', '1409 W. Littleton Blvd.'], ['Daddy\'s Chicken Shack®', '7330 S. Broadway'], ['Manna Bakery & Deli', '6905 S. Broadway'], ['The Chocolate Therapist', '2560 W. Main St.'], ['Playa Bowls', '2490 W. Main St.'], ['Café Terracotta', '5649 S. Curtice St.'], ['4G\'s at Columbine', '5950 S. Platte Canyon Road']
   ], tag: '' }
 ];
 
@@ -26,6 +26,7 @@ const orders = new Map();
 const savedCategories = new Set();
 let draggedRestaurant = null;
 const storageKey = 'littleton-eats-rankings-v1';
+const apiUrl = window.LITTLETON_EATS_API || '';
 
 try {
   const savedOrders = JSON.parse(localStorage.getItem(storageKey) || '{}');
@@ -114,15 +115,28 @@ filters.forEach(filter => filter.addEventListener('click', () => {
 }));
 search.addEventListener('input', render);
 document.querySelector('#headerVote').addEventListener('click', () => document.querySelector('#categories').scrollIntoView({ behavior: 'smooth' }));
-document.querySelector('#saveRankings').addEventListener('click', () => {
+document.querySelector('#saveRankings').addEventListener('click', async () => {
   if (!orders.size) return showToast('Drag restaurants into order first');
   orders.forEach((_, category) => savedCategories.add(category));
+  const payload = Object.fromEntries(orders);
   try {
-    localStorage.setItem(storageKey, JSON.stringify(Object.fromEntries(orders)));
+    localStorage.setItem(storageKey, JSON.stringify(payload));
   } catch {
     // The ranking still works for this session if storage is unavailable.
   }
+  if (!apiUrl) return showToast('Rankings saved on this device');
+  try {
+    const response = await fetch(`${apiUrl}/api/rankings`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ rankings: payload })
+    });
+    if (response.status === 409) return showToast('A ranking was already submitted here');
+    if (!response.ok) throw new Error('Vote submission failed');
+    showToast('Ranking submitted');
+  } catch {
+    showToast('Could not submit ranking');
+  }
   render();
-  showToast('Rankings saved');
 });
 render();
