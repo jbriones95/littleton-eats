@@ -1,8 +1,9 @@
 name = "littleton-eats-votes"
 main = "src/index.js"
 compatibility_date = "2026-08-06"
+workers_dev = true
 
 [[d1_databases]]
 binding = "DB"
 database_name = "littleton-eats-votes"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
+database_id = "11d1ba50-30e5-4358-97e4-669b8d55e0b6"

@@ -1,8 +1,8 @@
-const allowedOrigin = 'https://jbriones95.github.io';
+const allowedOrigins = new Set(['https://eatlittleton.com', 'https://jbriones95.github.io']);
 
 function corsHeaders(origin) {
   return {
-    'Access-Control-Allow-Origin': origin === allowedOrigin ? origin : allowedOrigin,
+    'Access-Control-Allow-Origin': allowedOrigins.has(origin) ? origin : 'https://eatlittleton.com',
     'Access-Control-Allow-Headers': 'content-type',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Content-Type': 'application/json'
@@ -61,7 +61,7 @@ function aggregateRankings(rows) {
 export default {
   async fetch(request, env) {
     const origin = request.headers.get('Origin') || '';
-    if (origin && origin !== allowedOrigin) return response({ error: 'Origin not allowed' }, 403, origin);
+    if (origin && !allowedOrigins.has(origin)) return response({ error: 'Origin not allowed' }, 403, origin);
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders(origin) });
     if (new URL(request.url).pathname !== '/api/rankings') return response({ error: 'Not found' }, 404, origin);
     if (request.method === 'GET') {
