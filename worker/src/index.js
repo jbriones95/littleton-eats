@@ -25,6 +25,12 @@ function normalizeCategory(category) {
   return category;
 }
 
+function categoryAliases(category) {
+  if (category === 'Drinks & Snacks') return ['Drinks & Snacks', 'Drinks'];
+  if (category === 'Ice Cream') return ['Ice Cream', 'Ice Cream & Sweets'];
+  return [category];
+}
+
 function aggregateRankings(rows) {
   const submissionTotals = new Map();
   rows.forEach(row => {
@@ -82,6 +88,14 @@ export default {
       const ipHash = await hashIp(ip, env.IP_HASH_SECRET);
       const existing = await env.DB.prepare('SELECT id FROM vote_submissions WHERE ip_hash = ?').bind(ipHash).first();
       if (!existing) return response({ ok: true, removed: false }, 200, origin);
+      const category = new URL(request.url).searchParams.get('category');
+      if (category) {
+        const statements = categoryAliases(category).map(name => env.DB.prepare('DELETE FROM rankings WHERE submission_id = ? AND category = ?').bind(existing.id, name));
+        await env.DB.batch(statements);
+        const remaining = await env.DB.prepare('SELECT COUNT(*) AS count FROM rankings WHERE submission_id = ?').bind(existing.id).first();
+        if (!Number(remaining?.count || 0)) await env.DB.prepare('DELETE FROM vote_submissions WHERE id = ?').bind(existing.id).run();
+        return response({ ok: true, removed: true, category }, 200, origin);
+      }
       await env.DB.batch([
         env.DB.prepare('DELETE FROM rankings WHERE submission_id = ?').bind(existing.id),
         env.DB.prepare('DELETE FROM vote_submissions WHERE id = ?').bind(existing.id)
@@ -112,17 +126,21 @@ export default {
 
     const ipHash = await hashIp(ip, env.IP_HASH_SECRET);
     const existing = await env.DB.prepare('SELECT id FROM vote_submissions WHERE ip_hash = ?').bind(ipHash).first();
-    if (existing) return response({ error: 'A ranking has already been submitted from this network' }, 409, origin);
-
-    const submissionId = crypto.randomUUID();
-    const createdAt = new Date().toISOString();
-    const statements = [env.DB.prepare('INSERT INTO vote_submissions (id, ip_hash, created_at) VALUES (?, ?, ?)').bind(submissionId, ipHash, createdAt)];
+    const submissionId = existing?.id || crypto.randomUUID();
+    const statements = existing ? [] : [env.DB.prepare('INSERT INTO vote_submissions (id, ip_hash, created_at) VALUES (?, ?, ?)').bind(submissionId, ipHash, new Date().toISOString())];
+    if (existing) {
+      entries.forEach(([category]) => {
+        categoryAliases(category).forEach(name => {
+          statements.push(env.DB.prepare('DELETE FROM rankings WHERE submission_id = ? AND category = ?').bind(submissionId, name));
+        });
+      });
+    }
     for (const [category, restaurants] of entries) {
       restaurants.forEach((restaurant, index) => {
         statements.push(env.DB.prepare('INSERT INTO rankings (submission_id, category, restaurant, rank) VALUES (?, ?, ?, ?)').bind(submissionId, category, restaurant, index + 1));
       });
     }
     await env.DB.batch(statements);
-    return response({ ok: true }, 201, origin);
+    return response({ ok: true }, existing ? 200 : 201, origin);
   }
 };

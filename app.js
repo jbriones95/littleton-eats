@@ -142,7 +142,10 @@ function render() {
     const places = orderedNames.map(name => category.places.find(([place]) => place === name));
     return `
     <article class="category-card">
-      <button class="category-info" type="button" aria-label="More information about ${category.title}"><span aria-hidden="true">i</span><span class="category-tooltip" role="tooltip">${escapeHtml(category.note)}</span></button>
+      <div class="category-tools">
+        <button class="category-reset" type="button" data-category="${category.title}" aria-label="Reset ${category.title}"><span aria-hidden="true">↺</span></button>
+        <button class="category-info" type="button" aria-label="More information about ${category.title}"><span aria-hidden="true">i</span><span class="category-tooltip" role="tooltip">${escapeHtml(category.note)}</span></button>
+      </div>
       <h3>${category.title}</h3>
       <div class="restaurant-list">
         ${places.map(([name, address], index) => `<div class="restaurant-option" draggable="true" data-category="${category.title}" data-place="${name}" data-index="${index}">
@@ -156,6 +159,30 @@ function render() {
   document.querySelector('#voteCount').textContent = `${rankedCategories.size} of ${categories.length}`;
   document.querySelector('#progressBar').style.width = `${(rankedCategories.size / categories.length) * 100}%`;
   renderCommunityResults();
+  grid.querySelectorAll('.category-reset').forEach(button => {
+    button.addEventListener('click', async () => {
+      const category = button.dataset.category;
+      if (apiUrl) {
+        try {
+          const response = await fetch(`${apiUrl}/api/rankings?category=${encodeURIComponent(category)}`, { method: 'DELETE' });
+          if (!response.ok) throw new Error('Category reset failed');
+        } catch {
+          showToast('Could not reset category');
+          return;
+        }
+      }
+      orders.delete(category);
+      rankedCategories.delete(category);
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(Object.fromEntries(orders)));
+      } catch {
+        // The category still resets for this session if storage is unavailable.
+      }
+      render();
+      loadCommunityResults();
+      showToast(`${category} reset`);
+    });
+  });
   grid.querySelectorAll('.restaurant-option').forEach(row => {
     row.addEventListener('dragstart', event => {
       draggedRestaurant = { category: row.dataset.category, name: row.dataset.place };
