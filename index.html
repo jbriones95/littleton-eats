@@ -34,7 +34,7 @@
             <a class="button button-primary" href="#categories">Start ranking <span>↓</span></a>
           </div>
         </div>
-        <div class="hero-sticker" aria-hidden="true"><strong>8</strong><span>categories<br />of local flavor</span></div>
+        <div class="hero-sticker" aria-hidden="true"><strong>15</strong><span>categories<br />of local flavor</span></div>
         <div class="hero-art" aria-label="A table set for a meal">
           <div class="sun-shape"></div>
           <div class="dish dish-back"></div>
@@ -58,10 +58,21 @@
           <div>
             <h2>Rank by <em>category.</em></h2>
           </div>
-          <div class="heading-side"><span id="voteCount">0 of 13</span><div class="progress"><i id="progressBar"></i></div><small>categories ranked</small></div>
+          <div class="heading-side"><span id="voteCount">0 of 15</span><div class="progress"><i id="progressBar"></i></div><small>categories ranked</small></div>
         </div>
         <div class="category-grid" id="categoryGrid"></div>
-        <div class="save-row"><p>Drag restaurants into your preferred order. Every position counts.</p><button class="button button-primary" id="saveRankings">Save rankings <span>✓</span></button></div>
+        <div class="save-row"><p>Drag restaurants into your preferred order. Every position counts.</p><div class="save-actions"><button class="button button-secondary" id="resetRankings">Reset order</button><button class="button button-primary" id="saveRankings">Save rankings <span>✓</span></button></div></div>
+      </section>
+
+      <section class="results-section" id="results" hidden>
+        <div class="section-heading results-heading">
+          <div>
+            <p class="eyebrow">Your picks</p>
+            <h2>Your <em>results.</em></h2>
+          </div>
+          <p class="results-intro">Your current favorites, from first place to last.</p>
+        </div>
+        <div class="results-grid" id="resultsGrid"></div>
       </section>
 
       <section class="footer-note" id="about"><p><small>Made by someone who eats in Littleton and wants to know other people's opinions. - <a href="https://josebriones.org" target="_blank" rel="noopener noreferrer">Jose B.</a></small></p><span>© 2026 Littleton Eats</span></section>
