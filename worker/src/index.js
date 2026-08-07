@@ -4,7 +4,7 @@ function corsHeaders(origin) {
   return {
     'Access-Control-Allow-Origin': allowedOrigins.has(origin) ? origin : 'https://eatlittleton.com',
     'Access-Control-Allow-Headers': 'content-type',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Methods': 'DELETE, GET, POST, OPTIONS',
     'Content-Type': 'application/json'
   };
 }
@@ -74,6 +74,19 @@ export default {
     if (request.method === 'GET') {
       const { results } = await env.DB.prepare('SELECT submission_id, category, restaurant, rank FROM rankings ORDER BY category, rank').all();
       return response({ categories: aggregateRankings(results || []) }, 200, origin);
+    }
+    if (request.method === 'DELETE') {
+      const ip = request.headers.get('CF-Connecting-IP');
+      if (!ip) return response({ error: 'Unable to identify request' }, 400, origin);
+      if (!env.IP_HASH_SECRET) return response({ error: 'Vote service is not configured' }, 503, origin);
+      const ipHash = await hashIp(ip, env.IP_HASH_SECRET);
+      const existing = await env.DB.prepare('SELECT id FROM vote_submissions WHERE ip_hash = ?').bind(ipHash).first();
+      if (!existing) return response({ ok: true, removed: false }, 200, origin);
+      await env.DB.batch([
+        env.DB.prepare('DELETE FROM rankings WHERE submission_id = ?').bind(existing.id),
+        env.DB.prepare('DELETE FROM vote_submissions WHERE id = ?').bind(existing.id)
+      ]);
+      return response({ ok: true, removed: true }, 200, origin);
     }
     if (request.method !== 'POST') return response({ error: 'Not found' }, 404, origin);
 

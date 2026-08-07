@@ -177,7 +177,16 @@ function render() {
 }
 
 document.querySelector('#headerVote').addEventListener('click', () => document.querySelector('#categories').scrollIntoView({ behavior: 'smooth' }));
-document.querySelector('#resetRankings').addEventListener('click', () => {
+document.querySelector('#resetRankings').addEventListener('click', async () => {
+  if (apiUrl) {
+    try {
+      const response = await fetch(`${apiUrl}/api/rankings`, { method: 'DELETE' });
+      if (!response.ok) throw new Error('Vote reset failed');
+    } catch {
+      showToast('Could not reset vote');
+      return;
+    }
+  }
   orders.clear();
   rankedCategories.clear();
   try {
@@ -186,7 +195,8 @@ document.querySelector('#resetRankings').addEventListener('click', () => {
     // The ranking still resets for this session if storage is unavailable.
   }
   render();
-  showToast('Rankings reset');
+  loadCommunityResults();
+  showToast('Vote reset');
 });
 document.querySelector('#saveRankings').addEventListener('click', async () => {
   if (!orders.size) return showToast('Drag restaurants into order first');

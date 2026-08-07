@@ -2,7 +2,7 @@
 
 This Worker stores one complete ranking per hashed Cloudflare IP address. It does not store raw IP addresses. The D1 database stores the ranking rows and a salted SHA-256 IP hash.
 
-`POST /api/rankings` records a ranking. `GET /api/rankings` returns community standings grouped by category, with vote counts and average rank.
+`POST /api/rankings` records a ranking. `DELETE /api/rankings` removes the current network's submitted ranking. `GET /api/rankings` returns community standings grouped by category, with vote counts and average rank.
 
 ## Deploy
 
