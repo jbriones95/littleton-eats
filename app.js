@@ -22,7 +22,21 @@ const categories = [
 const grid = document.querySelector('#categoryGrid');
 const search = document.querySelector('#searchInput');
 const filters = document.querySelectorAll('.filter');
-const voted = new Map();
+const rankings = new Map();
+const comments = new Map();
+const openComments = new Set();
+
+function escapeHtml(value) {
+  return value.replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
+}
+
+function showToast(message) {
+  const toast = document.querySelector('#toast');
+  toast.lastChild.textContent = ` ${message}`;
+  toast.classList.add('show');
+  window.clearTimeout(window.toastTimer);
+  window.toastTimer = window.setTimeout(() => toast.classList.remove('show'), 1800);
+}
 
 function render() {
   const query = search.value.toLowerCase().trim();
@@ -31,23 +45,57 @@ function render() {
     const matchesType = active === 'all' || category.type === active;
     const matchesSearch = !query || `${category.title} ${category.places.flat().join(' ')}`.toLowerCase().includes(query);
     return matchesType && matchesSearch;
-  }).map((category, index) => `
+  }).map(category => `
     <article class="category-card">
       <span class="category-type">${category.type}</span><span class="card-tag">${category.tag}</span>
-      <h3>${category.title}</h3><p>${category.note}</p>
+      <h3>${category.title}</h3><p>${category.note} <strong class="rank-hint">Rank your top 3</strong></p>
       <div class="restaurant-list">
-        ${category.places.map(([name, address]) => `<button class="restaurant-option ${voted.get(category.title) === name ? 'voted' : ''}" data-category="${category.title}" data-place="${name}"><span><b>${name}</b><small>${address}, Littleton, CO</small></span><i class="vote-dot">${voted.get(category.title) === name ? '✓' : ''}</i></button>`).join('')}
+        ${category.places.map(([name, address]) => {
+          const rank = rankings.get(category.title)?.indexOf(name) ?? -1;
+          const commentKey = `${category.title}:${name}`;
+          const comment = comments.get(commentKey) || '';
+          return `<div class="restaurant-option ${rank >= 0 ? 'voted' : ''}" data-category="${category.title}" data-place="${name}">
+            <button class="rank-button" aria-label="${rank >= 0 ? `Remove ${name} from ranking` : `Add ${name} to ranking`}">${rank >= 0 ? rank + 1 : '+'}</button>
+            <span><b>${name}</b><small>${address}, Littleton, CO</small></span>
+            <button class="comment-toggle" aria-label="Comment on ${name}">Comment</button>
+            ${openComments.has(commentKey) ? `<div class="comment-box"><textarea placeholder="What do you like about this place?" maxlength="240">${escapeHtml(comment)}</textarea><button class="comment-save">Save note</button></div>` : ''}
+          </div>`;
+        }).join('')}
       </div>
     </article>`).join('');
-  document.querySelector('#voteCount').textContent = `${voted.size} of ${categories.length}`;
-  document.querySelector('#progressBar').style.width = `${(voted.size / categories.length) * 100}%`;
-  grid.querySelectorAll('.restaurant-option').forEach(button => button.addEventListener('click', () => {
-    voted.set(button.dataset.category, button.dataset.place);
+  document.querySelector('#voteCount').textContent = `${rankings.size} of ${categories.length}`;
+  document.querySelector('#progressBar').style.width = `${(rankings.size / categories.length) * 100}%`;
+  grid.querySelectorAll('.rank-button').forEach(button => button.addEventListener('click', () => {
+    const row = button.closest('.restaurant-option');
+    const category = row.dataset.category;
+    const name = row.dataset.place;
+    const ranking = rankings.get(category) || [];
+    const currentRank = ranking.indexOf(name);
+    if (currentRank >= 0) ranking.splice(currentRank, 1);
+    else if (ranking.length < 3) ranking.push(name);
+    else return showToast('Top 3 already selected');
+    if (ranking.length) rankings.set(category, ranking);
+    else rankings.delete(category);
     render();
-    const toast = document.querySelector('#toast');
-    toast.classList.add('show');
-    window.clearTimeout(window.toastTimer);
-    window.toastTimer = window.setTimeout(() => toast.classList.remove('show'), 1800);
+    showToast('Ranking saved');
+  }));
+  grid.querySelectorAll('.comment-toggle').forEach(button => button.addEventListener('click', () => {
+    const row = button.closest('.restaurant-option');
+    const key = `${row.dataset.category}:${row.dataset.place}`;
+    openComments.has(key) ? openComments.delete(key) : openComments.add(key);
+    render();
+    const box = grid.querySelector(`[data-category="${CSS.escape(row.dataset.category)}"][data-place="${CSS.escape(row.dataset.place)}"] textarea`);
+    if (box) box.focus();
+  }));
+  grid.querySelectorAll('.comment-save').forEach(button => button.addEventListener('click', () => {
+    const row = button.closest('.restaurant-option');
+    const key = `${row.dataset.category}:${row.dataset.place}`;
+    const value = row.querySelector('textarea').value.trim();
+    if (value) comments.set(key, value);
+    else comments.delete(key);
+    openComments.delete(key);
+    render();
+    showToast('Note saved');
   }));
 }
 
