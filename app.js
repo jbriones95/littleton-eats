@@ -55,6 +55,20 @@ const storageKey = 'littleton-eats-rankings-v1';
 const apiUrl = window.LITTLETON_EATS_API || '';
 let communityResults = { status: 'loading', categories: [] };
 
+function shuffle(items) {
+  const shuffled = items.slice();
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+  }
+  return shuffled;
+}
+
+const displayCategories = shuffle(categories.map(category => ({
+  ...category,
+  places: shuffle(category.places)
+})));
+
 try {
   const savedOrders = JSON.parse(localStorage.getItem(storageKey) || '{}');
   Object.entries(savedOrders).forEach(([category, order]) => {
@@ -122,7 +136,7 @@ async function loadCommunityResults() {
 }
 
 function render() {
-  grid.innerHTML = categories.slice().sort((a, b) => b.places.length - a.places.length).map(category => {
+  grid.innerHTML = displayCategories.map(category => {
     const originalPlaces = category.places.map(([name]) => name);
     const orderedNames = orders.get(category.title) || originalPlaces;
     const places = orderedNames.map(name => category.places.find(([place]) => place === name));
@@ -163,7 +177,7 @@ function render() {
     row.addEventListener('drop', event => {
       event.preventDefault();
       if (!draggedRestaurant || draggedRestaurant.category !== row.dataset.category || draggedRestaurant.name === row.dataset.place) return;
-      const category = categories.find(item => item.title === row.dataset.category);
+      const category = displayCategories.find(item => item.title === row.dataset.category);
       const order = orders.get(category.title) || category.places.map(([name]) => name);
       const fromIndex = order.indexOf(draggedRestaurant.name);
       const toIndex = order.indexOf(row.dataset.place);
