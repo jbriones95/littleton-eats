@@ -1,12 +1,12 @@
 const categories = [
-  { title: 'Coffee', type: 'drink', note: 'Your daily ritual', places: [
+  { title: 'Coffee & Tea', type: 'drink', note: 'Your daily ritual', places: [
     ['Copper Door Coffee Roasters', '7301 S. Santa Fe Dr.'], ['Lost Coffee Café & Coffee Roastery', '1190 W. Littleton Blvd.'], ['Enchanted Grounds Coffeehouse', '3615 W. Bowles Ave.'], ['Nixon\'s Coffee House', '6399 S. Santa Fe Dr.'], ['Wild Goose Coffee in Denver Seminary', '6399 S. Santa Fe Dr.'], ['Black Rock Coffee Bar - Broadway', '7961 S. Broadway'], ['iN-TEA', '2440 W. Main St.'], ['DIRT Coffee Bar', '2506 W. Alamo Ave.']
   ], tag: 'Most loved' },
   { title: 'Mexican', type: 'food', note: 'Big flavor, made close to home', places: [
     ['Los Portales Mexican Restaurant', '5350 S. Santa Fe Dr.'], ['El Lucero Salvadoran & Mexican Restaurant', '1500 W. Littleton Blvd. #110 A'], ['Don Juan\'s Mexican Grill', '3625 W. Bowles Ave.'], ['Cencalli Taqueria', 'Littleton, CO 80120'], ['Harley\'s: A Hot Dog Revolution', '1500 W. Littleton Blvd.'], ['Mi Cocina Express - Broadway', '137 W. County Line Road'], ['Old Santa Fe Express Mexican Grille', '1500 W. Littleton Blvd.'], ['Mama Sol Cafe', '6439 S. Broadway'], ['4G\'s at Columbine', '5950 S. Platte Canyon Road']
   ], tag: 'Hot category' },
   { title: 'Pizza & Italian', type: 'food', note: 'A slice of the good life', places: [
-    ['Old Fashioned Italian Deli', '395 W. Littleton Blvd.'], ['The Garlic Knot Pizza & Pasta', '1621 W. Canal Circle'], ['Big Daddy\'s Pizza', '5829 S. Broadway'], ['Piccino Wood Oven Pizza', '5350 S. Santa Fe Dr.'], ['Romano\'s Italian Restaurant & Pizzeria', '5666 S. Windermere St.'], ['Walter\'s 303 Pizzeria & Publik House', '5194 S. Lowell Blvd.'], ['Anthony\'s Pizza & Pasta', '2610 W. Belleview Ave.']
+    ['Old Fashioned Italian Deli', '395 W. Littleton Blvd.'], ['The Garlic Knot Pizza & Pasta', '1621 W. Canal Circle'], ['Big Daddy\'s Pizza', '5829 S. Broadway'], ['Piccino Wood Oven Pizza', '5350 S. Santa Fe Dr.'], ['Romano\'s Italian Restaurant & Pizzeria', '5666 S. Windermere St.'], ['Walter\'s 303 Pizzeria & Publik House', '5194 S. Lowell Blvd.'], ['Anthony\'s Pizza & Pasta', '2610 W. Belleview Ave.'], ['Angelo\'s Taverna', '6685 S. Santa Fe Dr.']
   ], tag: '' },
   { title: 'Bars & Burgers', type: 'experience', note: 'Good food, good company', places: [
     ['Olde Towne Tavern', '2410 W. Main St.'], ['Black+Haus Tavern Littleton', '2439 W. Main St.'], ['Manning\'s Steaks and Spirits', '51 W. Dry Creek Ct.'], ['ViewHouse Littleton', '2680 W. Main St.'], ['Grande Station: A Social Bistro', '2299 W. Main St.'], ['Colorado Pinball Pub', '6209 S. Santa Fe Dr.'], ['Alibi\'s Bar & Grill', '7983 S. Broadway'], ['Celly\'s Bar and Grill in the Ice Ranch', '841 Southpark Dr.'], ['Cherry Cricket - Littleton', '819 W. Littleton Blvd.'], ['The Castle Bar & Grill', '6657 S. Broadway'], ['The 49th Food & Spirits - Littleton', '5350 S. Santa Fe Dr.'], ['Breckenridge Brewery', '2890 Brewery Lane'], ['The Melting Pot', '2707 W. Main St.']
@@ -33,7 +33,7 @@ const categories = [
     ['Pho Real', '2399 W. Main St.'], ['Pho Littleton', '389 W. Littleton Blvd.'], ['Pho 99 Vietnamese Noodles & Grill', '211 E. County Line Road'], ['Pho Broadway', '6645 S. Broadway'], ['VinaMeals', '1500 W. Littleton Blvd. #110 A']
   ], tag: '' },
   { title: 'Mediterranean', type: 'food', note: 'Grilled, herby, and bright', places: [
-    ['Hujra Kebab & Gyros', '2897 W. Belleview Ave. A'], ['Gyros Town Grill', '1399 W. Littleton Blvd.'], ['Angelo\'s Taverna', '6685 S. Santa Fe Dr.']
+    ['Hujra Kebab & Gyros', '2897 W. Belleview Ave. A'], ['Gyros Town Grill', '1399 W. Littleton Blvd.']
   ], tag: '' }
 ];
 
