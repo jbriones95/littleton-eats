@@ -31,8 +31,14 @@ const apiUrl = window.LITTLETON_EATS_API || '';
 try {
   const savedOrders = JSON.parse(localStorage.getItem(storageKey) || '{}');
   Object.entries(savedOrders).forEach(([category, order]) => {
-    if (Array.isArray(order) && order.length) {
-      orders.set(category, order);
+    const categoryData = categories.find(item => item.title === category);
+    if (!categoryData || !Array.isArray(order)) return;
+    const available = new Set(categoryData.places.map(([name]) => name));
+    const validOrder = order.filter(name => available.has(name));
+    const missing = categoryData.places.map(([name]) => name).filter(name => !validOrder.includes(name));
+    const normalizedOrder = [...validOrder, ...missing];
+    if (normalizedOrder.length) {
+      orders.set(category, normalizedOrder);
       savedCategories.add(category);
     }
   });
