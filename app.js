@@ -167,7 +167,7 @@ function render() {
       const fromIndex = order.indexOf(draggedRestaurant.name);
       const toIndex = order.indexOf(row.dataset.place);
       order.splice(fromIndex, 1);
-      order.splice(fromIndex < toIndex ? toIndex - 1 : toIndex, 0, draggedRestaurant.name);
+      order.splice(toIndex, 0, draggedRestaurant.name);
       orders.set(category.title, order);
       rankedCategories.add(category.title);
       render();
